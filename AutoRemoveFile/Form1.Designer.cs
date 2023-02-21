@@ -57,11 +57,13 @@
             // 
             // rtb_log
             // 
+            this.rtb_log.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rtb_log.Location = new System.Drawing.Point(12, 34);
             this.rtb_log.Name = "rtb_log";
             this.rtb_log.Size = new System.Drawing.Size(783, 172);
             this.rtb_log.TabIndex = 0;
-            this.rtb_log.Text = "`";
+            this.rtb_log.Text = "";
             // 
             // panel2
             // 
