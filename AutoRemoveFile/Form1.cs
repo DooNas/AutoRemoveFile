@@ -6,21 +6,23 @@ namespace AutoRemoveFile
 {
     public partial class Form1 : Form
     {
-        string log = "";
         public Form1()
         {
             InitializeComponent();
         }
-        
+        #region 원하는 상위 디렉토리 기반으로 TreeView 구현
         private void tb_Path_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
             folderBrowser.ShowDialog();
             tb_Path.Text = folderBrowser.SelectedPath;
-            ListDictionary(Tree_Directory, folderBrowser.SelectedPath);
-            rtb_log.AppendText(log);
         }
-        #region TreeView를 활용한 디렉토리 확인
+        private void bt_Check_Click(object sender, EventArgs e)
+        {
+            DirectoryInfo di = new DirectoryInfo(tb_Path.Text);
+            if(di.Exists)  ListDictionary(Tree_Directory, tb_Path.Text);
+            else MessageBox.Show("없는 경로입니다.");
+        }
         private void ListDictionary(TreeView treeview, string path)
         {
             treeview.Nodes.Clear();
@@ -31,25 +33,27 @@ namespace AutoRemoveFile
             }
             catch(ArgumentException ex)
             {
-                log += ex.ToString() + "\n";
+                rtb_log.AppendText(ex.ToString());
             }
         }
         private TreeNode CreatedirectoryNode(DirectoryInfo directoryInfo)
         {
-            Form1 form = new Form1();
             var directoryNode = new TreeNode(directoryInfo.Name);
 
-            foreach (var dir in directoryInfo.GetDirectories())
+            foreach (var dir in directoryInfo.GetDirectories()) {
                 try
                 {
                     directoryNode.Nodes.Add(CreatedirectoryNode(dir));
                 }
                 catch (UnauthorizedAccessException ex)
                 {
-                    log += ex.ToString() + "\n";
-                } 
+                    rtb_log.AppendText(ex.ToString());
+                }
+            }
             return directoryNode;
         }
         #endregion
+
+
     }
 }
