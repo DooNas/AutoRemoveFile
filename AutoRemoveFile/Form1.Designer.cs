@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.logBox = new System.Windows.Forms.RichTextBox();
+            this.rtb_log = new System.Windows.Forms.RichTextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lb_Time = new System.Windows.Forms.Label();
             this.tb_Time = new System.Windows.Forms.TextBox();
@@ -48,20 +48,20 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.logBox);
+            this.panel1.Controls.Add(this.rtb_log);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 456);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(806, 218);
             this.panel1.TabIndex = 0;
             // 
-            // logBox
+            // rtb_log
             // 
-            this.logBox.Location = new System.Drawing.Point(12, 34);
-            this.logBox.Name = "logBox";
-            this.logBox.Size = new System.Drawing.Size(783, 172);
-            this.logBox.TabIndex = 0;
-            this.logBox.Text = "";
+            this.rtb_log.Location = new System.Drawing.Point(12, 34);
+            this.rtb_log.Name = "rtb_log";
+            this.rtb_log.Size = new System.Drawing.Size(783, 172);
+            this.rtb_log.TabIndex = 0;
+            this.rtb_log.Text = "`";
             // 
             // panel2
             // 
@@ -179,7 +179,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.RichTextBox logBox;
+        private System.Windows.Forms.RichTextBox rtb_log;
         private System.Windows.Forms.Label lb_Path;
         private System.Windows.Forms.TextBox tb_Path;
         private System.Windows.Forms.Label lb_Interval;

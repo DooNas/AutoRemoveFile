@@ -19,9 +19,6 @@ namespace AutoRemoveFile
             InitializeComponent();
         }
         
-
-
-
         private void tb_Path_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
@@ -38,9 +35,10 @@ namespace AutoRemoveFile
                 var rootDirectoryInfo = new DirectoryInfo(path);    //최상위 디렉토리 값 저장
                 treeview.Nodes.Add(CreatedirectoryNode(rootDirectoryInfo));
             }
-            catch(ArgumentException)
+            catch(ArgumentException ex)
             {
-
+                var log = new Form1();
+                log.rtb_log.AppendText(ex.ToString());
             }
         }
         private static TreeNode CreatedirectoryNode(DirectoryInfo directoryInfo)
@@ -48,8 +46,15 @@ namespace AutoRemoveFile
             var directoryNode = new TreeNode(directoryInfo.Name);
 
             foreach (var dir in directoryInfo.GetDirectories())
-                directoryNode.Nodes.Add(CreatedirectoryNode(dir));
-
+                try
+                {
+                    directoryNode.Nodes.Add(CreatedirectoryNode(dir));
+                }
+                catch (UnauthorizedAccessException ex)
+                {
+                    var log = new Form1();
+                    log.rtb_log.AppendText(ex.ToString());
+                }
             return directoryNode;
         }
 
