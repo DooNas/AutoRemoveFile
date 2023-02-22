@@ -32,21 +32,21 @@
             this.lb_log = new System.Windows.Forms.Label();
             this.rtb_log = new System.Windows.Forms.RichTextBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.bt_Check = new System.Windows.Forms.Button();
             this.lb_Time = new System.Windows.Forms.Label();
             this.tb_Time = new System.Windows.Forms.TextBox();
             this.lb_Interval = new System.Windows.Forms.Label();
             this.lb_Path = new System.Windows.Forms.Label();
             this.tb_Path = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.clb_Delete = new System.Windows.Forms.CheckedListBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.lb_Delete = new System.Windows.Forms.Label();
             this.lb_Tree_Directory = new System.Windows.Forms.Label();
             this.Tree_Directory = new System.Windows.Forms.TreeView();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.fileSystemWatcher = new System.IO.FileSystemWatcher();
-            this.lb_Delete = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.bt_Check = new System.Windows.Forms.Button();
-            this.clb_Delete = new System.Windows.Forms.CheckedListBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -96,6 +96,17 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(806, 47);
             this.panel2.TabIndex = 1;
+            // 
+            // bt_Check
+            // 
+            this.bt_Check.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bt_Check.Location = new System.Drawing.Point(429, 12);
+            this.bt_Check.Name = "bt_Check";
+            this.bt_Check.Size = new System.Drawing.Size(97, 25);
+            this.bt_Check.TabIndex = 5;
+            this.bt_Check.Text = "CHECK";
+            this.bt_Check.UseVisualStyleBackColor = true;
+            this.bt_Check.Click += new System.EventHandler(this.bt_Check_Click);
             // 
             // lb_Time
             // 
@@ -164,6 +175,46 @@
             this.panel3.Size = new System.Drawing.Size(806, 409);
             this.panel3.TabIndex = 2;
             // 
+            // clb_Delete
+            // 
+            this.clb_Delete.FormattingEnabled = true;
+            this.clb_Delete.Location = new System.Drawing.Point(416, 43);
+            this.clb_Delete.Name = "clb_Delete";
+            this.clb_Delete.Size = new System.Drawing.Size(379, 304);
+            this.clb_Delete.TabIndex = 5;
+            // 
+            // button2
+            // 
+            this.button2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.button2.Location = new System.Drawing.Point(416, 353);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(379, 50);
+            this.button2.TabIndex = 4;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(12, 353);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(379, 50);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // lb_Delete
+            // 
+            this.lb_Delete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lb_Delete.AutoSize = true;
+            this.lb_Delete.Font = new System.Drawing.Font("굴림", 12F);
+            this.lb_Delete.Location = new System.Drawing.Point(419, 15);
+            this.lb_Delete.Name = "lb_Delete";
+            this.lb_Delete.Size = new System.Drawing.Size(101, 20);
+            this.lb_Delete.TabIndex = 3;
+            this.lb_Delete.Text = "Delete List";
+            // 
             // lb_Tree_Directory
             // 
             this.lb_Tree_Directory.AutoSize = true;
@@ -193,56 +244,6 @@
             // 
             this.fileSystemWatcher.EnableRaisingEvents = true;
             this.fileSystemWatcher.SynchronizingObject = this;
-            // 
-            // lb_Delete
-            // 
-            this.lb_Delete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lb_Delete.AutoSize = true;
-            this.lb_Delete.Font = new System.Drawing.Font("굴림", 12F);
-            this.lb_Delete.Location = new System.Drawing.Point(419, 15);
-            this.lb_Delete.Name = "lb_Delete";
-            this.lb_Delete.Size = new System.Drawing.Size(101, 20);
-            this.lb_Delete.TabIndex = 3;
-            this.lb_Delete.Text = "Delete List";
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(12, 353);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(379, 50);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.button2.Location = new System.Drawing.Point(416, 353);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(379, 50);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // bt_Check
-            // 
-            this.bt_Check.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bt_Check.Location = new System.Drawing.Point(429, 12);
-            this.bt_Check.Name = "bt_Check";
-            this.bt_Check.Size = new System.Drawing.Size(97, 25);
-            this.bt_Check.TabIndex = 5;
-            this.bt_Check.Text = "CHECK";
-            this.bt_Check.UseVisualStyleBackColor = true;
-            this.bt_Check.Click += new System.EventHandler(this.bt_Check_Click);
-            // 
-            // clb_Delete
-            // 
-            this.clb_Delete.FormattingEnabled = true;
-            this.clb_Delete.Location = new System.Drawing.Point(416, 43);
-            this.clb_Delete.Name = "clb_Delete";
-            this.clb_Delete.Size = new System.Drawing.Size(379, 304);
-            this.clb_Delete.TabIndex = 5;
             // 
             // Form1
             // 

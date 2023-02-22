@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace AutoRemoveFile
 {
@@ -21,17 +24,18 @@ namespace AutoRemoveFile
         {
             DirectoryInfo di = new DirectoryInfo(tb_Path.Text);
             if(di.Exists)  ListDictionary(Tree_Directory, tb_Path.Text);
-            else MessageBox.Show("없는 경로입니다.");
+            else MessageBox.Show("try again");
         }
-        private void ListDictionary(TreeView treeview, string path)
+
+        private void ListDictionary(System.Windows.Forms.TreeView tree_Directory, string text)
         {
-            treeview.Nodes.Clear();
+            tree_Directory.Nodes.Clear();
             try
             {
-                var rootDirectoryInfo = new DirectoryInfo(path);    //최상위 디렉토리 값 저장
-                treeview.Nodes.Add(CreatedirectoryNode(rootDirectoryInfo));
+                var rootDirectoryInfo = new DirectoryInfo(text);    //최상위 디렉토리 값 저장
+                tree_Directory.Nodes.Add(CreatedirectoryNode(rootDirectoryInfo));
             }
-            catch(ArgumentException ex)
+            catch (ArgumentException ex)
             {
                 rtb_log.AppendText(ex.ToString());
             }
@@ -52,7 +56,25 @@ namespace AutoRemoveFile
             }
             return directoryNode;
         }
+
         #endregion
+
+
+        private List<TreeNode> checkedNodes = new List<TreeNode>();
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            checkedNodes.Clear();//초기화
+            CheckedNodes(Tree_Directory.Nodes);
+        }
+        private void CheckedNodes(TreeNodeCollection nodes)//재귀를 활용해서 자식까지 진행
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (node.Checked)checkedNodes.Add(node);
+                else CheckedNodes(node.Nodes);
+            }
+        }
 
 
     }
