@@ -9,6 +9,7 @@ namespace AutoRemoveFile
 {
     public partial class MainForm : Form
     {
+        
         public MainForm()
         {
             InitializeComponent();
@@ -18,6 +19,7 @@ namespace AutoRemoveFile
         }
 
         LogController logController = new LogController();
+        string LogPath_set = Environment.CurrentDirectory;
 
         #region 트레이 아이콘
         private void Tray_Icon_Load(object sender, EventArgs e)
@@ -42,12 +44,12 @@ namespace AutoRemoveFile
         }
         private void bt_Check_Click(object sender, EventArgs e)
         {
-            logController.LogWrite(rtb_log, tb_Path.Text, 2);
+            logController.LogWrite(rtb_log, tb_Path.Text, 2, LogPath_set);
             DirectoryInfo di = new DirectoryInfo(tb_Path.Text);
             if (di.Exists)
             {
                 ListDictionary(Tree_Directory, tb_Path.Text);
-                logController.LogWrite(rtb_log, "", 3);
+                logController.LogWrite(rtb_log, "", 3, LogPath_set);
             }
             else MessageBox.Show("Try again");
         }
@@ -60,14 +62,14 @@ namespace AutoRemoveFile
                 var rootDirectoryInfo = new DirectoryInfo(text);    //최상위 디렉토리 값 저장
                 tree_Directory.Nodes.Add(CreatedirectoryNode(rootDirectoryInfo));
             }
-            catch(Exception ex){logController.LogWrite(rtb_log, ex.Message, 1);}
+            catch(Exception ex){logController.LogWrite(rtb_log, ex.Message, 1, LogPath_set); }
         }
         private TreeNode CreatedirectoryNode(DirectoryInfo directoryInfo)
         {
             var directoryNode = new TreeNode(directoryInfo.Name);
             foreach (var dir in directoryInfo.GetDirectories()) {
                 try{directoryNode.Nodes.Add(CreatedirectoryNode(dir)); }
-                catch(Exception ex){logController.LogWrite(rtb_log, ex.Message, 1);}
+                catch(Exception ex){logController.LogWrite(rtb_log, ex.Message, 1, LogPath_set); }
             }
             return directoryNode;
         }
@@ -113,5 +115,13 @@ namespace AutoRemoveFile
         }
 
         #endregion
+
+        private void bt_logPath_Click(object sender, EventArgs e)
+        {
+            LogForm logForm = new LogForm();
+            logForm.LogPath = LogPath_set;
+            logForm.ShowDialog();
+            LogPath_set = logForm.LogPath;
+        }
     }
 }

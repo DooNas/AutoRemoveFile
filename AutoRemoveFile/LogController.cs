@@ -20,7 +20,7 @@ namespace AutoRemoveFile
                 "[{0}] Get Directory OK!",
                 "[{0}] [DEL] {1}"
             };
-            if(logPath=="") logPath = Environment.CurrentDirectory + @"\Log";
+            logPath = logPath + @"\Log";
             string FilePath = logPath + "\\Log_" + DateTime.Today.ToString("MMdd") + ".log";
             string temp;
 

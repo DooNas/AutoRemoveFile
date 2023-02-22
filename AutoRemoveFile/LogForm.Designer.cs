@@ -76,6 +76,7 @@
             this.Controls.Add(this.Logtb_Path);
             this.Name = "LogForm";
             this.Text = "LogForm";
+            this.Load += new System.EventHandler(this.LogForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.bt_logPath = new System.Windows.Forms.Button();
             this.cb_AutoStart = new System.Windows.Forms.CheckBox();
             this.lb_log = new System.Windows.Forms.Label();
             this.rtb_log = new System.Windows.Forms.RichTextBox();
@@ -41,9 +42,9 @@
             this.lb_Path = new System.Windows.Forms.Label();
             this.tb_Path = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.listb_deletePath = new System.Windows.Forms.ListBox();
             this.lb_hour = new System.Windows.Forms.Label();
             this.tb_lastupdate = new System.Windows.Forms.TextBox();
-            this.bt_setpath = new System.Windows.Forms.Button();
             this.lb_Delete = new System.Windows.Forms.Label();
             this.lb_lastupdate = new System.Windows.Forms.Label();
             this.lb_Tree_Directory = new System.Windows.Forms.Label();
@@ -54,8 +55,8 @@
             this.Context_TaryIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sm_show = new System.Windows.Forms.ToolStripMenuItem();
             this.sm_exit = new System.Windows.Forms.ToolStripMenuItem();
-            this.bt_logPath = new System.Windows.Forms.Button();
-            this.listb_deletePath = new System.Windows.Forms.ListBox();
+            this.bt_setpath = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -74,6 +75,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(806, 245);
             this.panel1.TabIndex = 0;
+            // 
+            // bt_logPath
+            // 
+            this.bt_logPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bt_logPath.Location = new System.Drawing.Point(12, 213);
+            this.bt_logPath.Name = "bt_logPath";
+            this.bt_logPath.Size = new System.Drawing.Size(97, 25);
+            this.bt_logPath.TabIndex = 6;
+            this.bt_logPath.Text = "PATH";
+            this.bt_logPath.UseVisualStyleBackColor = true;
+            this.bt_logPath.Click += new System.EventHandler(this.bt_logPath_Click);
             // 
             // cb_AutoStart
             // 
@@ -128,7 +140,7 @@
             this.bt_Check.Name = "bt_Check";
             this.bt_Check.Size = new System.Drawing.Size(97, 25);
             this.bt_Check.TabIndex = 5;
-            this.bt_Check.Text = "CHECK";
+            this.bt_Check.Text = "OK";
             this.bt_Check.UseVisualStyleBackColor = true;
             this.bt_Check.Click += new System.EventHandler(this.bt_Check_Click);
             // 
@@ -187,6 +199,7 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.button1);
             this.panel3.Controls.Add(this.listb_deletePath);
             this.panel3.Controls.Add(this.lb_hour);
             this.panel3.Controls.Add(this.tb_lastupdate);
@@ -200,6 +213,15 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(806, 408);
             this.panel3.TabIndex = 2;
+            // 
+            // listb_deletePath
+            // 
+            this.listb_deletePath.FormattingEnabled = true;
+            this.listb_deletePath.ItemHeight = 15;
+            this.listb_deletePath.Location = new System.Drawing.Point(304, 43);
+            this.listb_deletePath.Name = "listb_deletePath";
+            this.listb_deletePath.Size = new System.Drawing.Size(491, 319);
+            this.listb_deletePath.TabIndex = 7;
             // 
             // lb_hour
             // 
@@ -221,17 +243,6 @@
             this.tb_lastupdate.TabIndex = 6;
             this.tb_lastupdate.Text = "48";
             this.tb_lastupdate.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // bt_setpath
-            // 
-            this.bt_setpath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.bt_setpath.Location = new System.Drawing.Point(12, 353);
-            this.bt_setpath.Name = "bt_setpath";
-            this.bt_setpath.Size = new System.Drawing.Size(268, 50);
-            this.bt_setpath.TabIndex = 3;
-            this.bt_setpath.Text = "CHECK";
-            this.bt_setpath.UseVisualStyleBackColor = true;
-            this.bt_setpath.Click += new System.EventHandler(this.bt_Path_Click);
             // 
             // lb_Delete
             // 
@@ -313,24 +324,26 @@
             this.sm_exit.Size = new System.Drawing.Size(115, 24);
             this.sm_exit.Text = "Exit";
             // 
-            // bt_logPath
+            // bt_setpath
             // 
-            this.bt_logPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bt_logPath.Location = new System.Drawing.Point(698, 11);
-            this.bt_logPath.Name = "bt_logPath";
-            this.bt_logPath.Size = new System.Drawing.Size(97, 25);
-            this.bt_logPath.TabIndex = 6;
-            this.bt_logPath.Text = "PATH";
-            this.bt_logPath.UseVisualStyleBackColor = true;
+            this.bt_setpath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.bt_setpath.Location = new System.Drawing.Point(12, 352);
+            this.bt_setpath.Name = "bt_setpath";
+            this.bt_setpath.Size = new System.Drawing.Size(268, 50);
+            this.bt_setpath.TabIndex = 3;
+            this.bt_setpath.Text = "SETTING";
+            this.bt_setpath.UseVisualStyleBackColor = true;
+            this.bt_setpath.Click += new System.EventHandler(this.bt_Path_Click);
             // 
-            // listb_deletePath
+            // button1
             // 
-            this.listb_deletePath.FormattingEnabled = true;
-            this.listb_deletePath.ItemHeight = 15;
-            this.listb_deletePath.Location = new System.Drawing.Point(302, 43);
-            this.listb_deletePath.Name = "listb_deletePath";
-            this.listb_deletePath.Size = new System.Drawing.Size(493, 319);
-            this.listb_deletePath.TabIndex = 7;
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(542, 368);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(253, 34);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "SAVE";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -371,7 +384,6 @@
         private System.Windows.Forms.Label lb_log;
         private System.Windows.Forms.Label lb_Tree_Directory;
         private System.Windows.Forms.Label lb_Delete;
-        private System.Windows.Forms.Button bt_setpath;
         private System.Windows.Forms.Button bt_Check;
         private System.Windows.Forms.Label lb_lastupdate;
         private System.Windows.Forms.Label lb_hour;
@@ -383,6 +395,8 @@
         private System.Windows.Forms.ToolStripMenuItem sm_exit;
         private System.Windows.Forms.Button bt_logPath;
         private System.Windows.Forms.ListBox listb_deletePath;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button bt_setpath;
     }
 }
 
