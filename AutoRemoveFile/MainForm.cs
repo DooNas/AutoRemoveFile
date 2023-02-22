@@ -12,9 +12,13 @@ namespace AutoRemoveFile
         public MainForm()
         {
             InitializeComponent();
+
             this.Load += Tray_Icon_Load;
             Tray_Icon.MouseDoubleClick += Tray_Icon_MouseDoubleClick;
         }
+
+        LogController logController = new LogController();
+
         #region 트레이 아이콘
         private void Tray_Icon_Load(object sender, EventArgs e)
         {
@@ -38,9 +42,14 @@ namespace AutoRemoveFile
         }
         private void bt_Check_Click(object sender, EventArgs e)
         {
+            logController.LogWrite(rtb_log, tb_Path.Text, 2);
             DirectoryInfo di = new DirectoryInfo(tb_Path.Text);
-            if(di.Exists)  ListDictionary(Tree_Directory, tb_Path.Text);
-            else MessageBox.Show("try again");
+            if (di.Exists)
+            {
+                ListDictionary(Tree_Directory, tb_Path.Text);
+                logController.LogWrite(rtb_log, "", 3);
+            }
+            else MessageBox.Show("Try again");
         }
 
         private void ListDictionary(System.Windows.Forms.TreeView tree_Directory, string text)
@@ -51,35 +60,23 @@ namespace AutoRemoveFile
                 var rootDirectoryInfo = new DirectoryInfo(text);    //최상위 디렉토리 값 저장
                 tree_Directory.Nodes.Add(CreatedirectoryNode(rootDirectoryInfo));
             }
-            catch (ArgumentException ex)
-            {
-                rtb_log.AppendText(ex.ToString());
-            }
+            catch(Exception ex){logController.LogWrite(rtb_log, ex.Message, 1);}
         }
         private TreeNode CreatedirectoryNode(DirectoryInfo directoryInfo)
         {
             var directoryNode = new TreeNode(directoryInfo.Name);
-
             foreach (var dir in directoryInfo.GetDirectories()) {
-                try
-                {
-                    directoryNode.Nodes.Add(CreatedirectoryNode(dir));
-                }
-                catch (UnauthorizedAccessException ex)
-                {
-                    rtb_log.AppendText(ex.ToString());
-                }
+                try{directoryNode.Nodes.Add(CreatedirectoryNode(dir)); }
+                catch(Exception ex){logController.LogWrite(rtb_log, ex.Message, 1);}
             }
             return directoryNode;
         }
         private void tvdir_AfterCheck(object sender, TreeViewEventArgs e)
         {
             var node = e.Node;
-
             var children = node.Nodes;
             for (int K = 0; K < children.Count; K++) { children[K].Checked = node.Checked; }
         }
-
         #endregion
 
         #region TreeView에서 선택한 경로를 Delete List로 연결
