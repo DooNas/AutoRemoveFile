@@ -56,7 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\StartController.cs" />
-    <Compile Include="Controller\TimeController.cs" />
     <Compile Include="Controller\DeleteController.cs" />
     <Compile Include="Controller\LogController.cs" />
     <Compile Include="View\LogForm.cs">

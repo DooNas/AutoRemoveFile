@@ -45,8 +45,8 @@ namespace AutoRemoveFile
                 DeleteDirList = Properties.Settings.Default.DeleteListPath.Split('|');
                 foreach(string path in DeleteDirList) listb_deletePath.Items.Add(path);
             }
-            dtcontroller.Setting(DeleteDirList, rtb_log, int.Parse(tb_Time.Text));
-            dtcontroller.Interval_Delete(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(Double.Parse(tb_lastupdate.Text) * 3600));
+            dtcontroller.Setting(DeleteDirList, rtb_log, int.Parse(tb_lastupdate.Text), int.Parse(tb_Time.Text));
+            dtcontroller.Interval_Delete(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(Double.Parse(tb_Time.Text) * 3600));
             GC.Collect();   //가비지 컬렉터
         }
 
@@ -207,7 +207,7 @@ namespace AutoRemoveFile
         }
         #endregion
 
-        #region setting파일로 로컬피시에 설정 값 저장        
+        #region setting파일로 로컬피시에 설정 값 저장
         private void button1_Click(object sender, EventArgs e)
         {
             //시간
@@ -217,7 +217,7 @@ namespace AutoRemoveFile
             Properties.Settings.Default.Save();
             MessageBox.Show("Save!!");
         }
-    #endregion
+        #endregion
 
 
     }
