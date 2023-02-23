@@ -13,32 +13,26 @@ namespace AutoRemoveFile
     {
         private const string APPLICATION_NAME = "AutoRemoveFile";
         RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(
-                                 @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+            "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
-        public void SetAutoStartApplication(string applicationName, string applicationFilePath)
+        public RegistryKey GetKey
         {
-            if (registryKey.GetValue(APPLICATION_NAME) == null)
-            {
-                registryKey.SetValue(APPLICATION_NAME, applicationFilePath);
-            }
+            get { return registryKey; }
         }
 
-        public void SetAutoStartApplication()
+        public void SetAuto()
         {
-            SetAutoStartApplication(APPLICATION_NAME, Application.ExecutablePath);
+            registryKey.SetValue(
+                APPLICATION_NAME, 
+                Environment.CurrentDirectory + "\\" + AppDomain.CurrentDomain.FriendlyName
+                );
+            
         }
 
-        public void ResetAutoStartApplication()
+        public void DeleteAuto()
         {
-            if (registryKey.GetValue(APPLICATION_NAME) != null)
-            {
-                registryKey.DeleteValue(APPLICATION_NAME, false);
-            }
-        }
-
-        public bool IsAutoStartApplication()
-        {
-            return registryKey.GetValue(APPLICATION_NAME) != null;
+            registryKey.DeleteValue(APPLICATION_NAME, false);
+            MessageBox.Show("AutoStart is Delete");
         }
     }
 }

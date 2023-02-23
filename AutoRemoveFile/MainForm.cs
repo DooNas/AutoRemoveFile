@@ -12,17 +12,26 @@ namespace AutoRemoveFile
         public MainForm()
         {
             InitializeComponent();
-
+            this.Load += Main_Load;
             TrayIconAction();
         }
         LogController logController = new LogController();
         private string LogPath_set = Environment.CurrentDirectory;  //ㅣog저장 위치
 
+        AutoStart autoStart = new AutoStart();//자동실행
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+            Tray_Icon.ContextMenuStrip = Context_TaryIcon;
+
+            if(autoStart.GetKey.GetValue("AutoRemoveFile") == null) cb_AutoStart.Checked = false;
+            else cb_AutoStart.Checked = true;
+        }
+
         #region 트레이 아이콘
         private void TrayIconAction()
         {
             this.FormClosing += MainForm_FormClosing;
-            this.Load += Tray_Icon_Load;
             Tray_Icon.MouseDoubleClick += Tray_Icon_MouseDoubleClick;
             sm_show.Click += Sm_show_Click;
             sm_exit.Click += Sm_exit_Click;
@@ -35,10 +44,6 @@ namespace AutoRemoveFile
                 this.Hide();
                 e.Cancel = true;
             }
-        }
-        private void Tray_Icon_Load(object sender, EventArgs e)
-        {
-            Tray_Icon.ContextMenuStrip = Context_TaryIcon;
         }
         private void Tray_Icon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
@@ -134,15 +139,23 @@ namespace AutoRemoveFile
         #endregion
 
         #region DeleteList를 기준으로 ㅁ시간마다 ㅁ시간 경과된 폴더 제거
+
+
         #endregion
 
         #region 윈도우 부팅시 자동시작
         private void AutoStart(object sender, EventArgs e)
         {
-
+            if (cb_AutoStart.Checked)
+            {
+                autoStart.SetAuto();
+                MessageBox.Show("AutoStart is start");
+            }
+            else autoStart.DeleteAuto();
         }
 
         #endregion
+
         #region log파일 저장경로 변경
         private void bt_logPath_Click(object sender, EventArgs e)
         {
@@ -151,6 +164,9 @@ namespace AutoRemoveFile
             logForm.ShowDialog();
             LogPath_set = logForm.LogPath;
         }
+        #endregion
+
+        #region ini파일로 로컬피시에 설정 값 저장
         #endregion
     }
 }
