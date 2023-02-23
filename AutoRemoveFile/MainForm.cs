@@ -13,33 +13,33 @@ namespace AutoRemoveFile
         {
             InitializeComponent();
             this.Load += Main_Load;
+            Application.Idle += Application_Idle;
             TrayIconAction();
         }
-        LogController logController = new LogController();
-        private string LogPath_set = Environment.CurrentDirectory;  //ㅣog저장 위치
 
+
+        LogController logController = new LogController();
         AutoStart autoStart = new AutoStart();//자동실행
 
         private void Main_Load(object sender, EventArgs e)
         {
+            tb_Path.Text = Properties.Settings.Default.DirPath;
             Tray_Icon.ContextMenuStrip = Context_TaryIcon;
-
-            if(autoStart.GetKey.GetValue("AutoRemoveFile") == null) cb_AutoStart.Checked = false;
+            if (autoStart.GetKey.GetValue("AutoRemoveFile") == null) cb_AutoStart.Checked = false;
             else cb_AutoStart.Checked = true;
         }
 
         #region 트레이 아이콘
-        private void TrayIconAction()
+        private void TrayIconAction() //Events
         {
             this.FormClosing += MainForm_FormClosing;
             Tray_Icon.MouseDoubleClick += Tray_Icon_MouseDoubleClick;
             sm_show.Click += Sm_show_Click;
             sm_exit.Click += Sm_exit_Click;
         }
-
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason == CloseReason.UserClosing)//트레이아이콘으로
+            if (e.CloseReason == CloseReason.UserClosing)//Dont Close
             {
                 this.Hide();
                 e.Cancel = true;
@@ -62,28 +62,34 @@ namespace AutoRemoveFile
             MessageBox.Show("Are you Sure?");
             Application.ExitThread();
         }
-
         #endregion
 
         #region 원하는 상위 디렉토리 기반으로 TreeView 구현
-        private void tb_Path_Click(object sender, EventArgs e)
+        private void tb_Path_Click(object sender, EventArgs e) //Find Main Path
         {
             FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
             folderBrowser.ShowDialog();
             tb_Path.Text = folderBrowser.SelectedPath;
+            Properties.Settings.Default.DirPath = tb_Path.Text; //로컬 설정화
         }
-        private void bt_Check_Click(object sender, EventArgs e)
+        private void bt_Check_Click(object sender, EventArgs e) //Move to CheckList<Treeview>
         {
-            logController.LogWrite(rtb_log, tb_Path.Text, 2, LogPath_set);
+            logController.LogWrite(rtb_log, tb_Path.Text, 2);
             DirectoryInfo di = new DirectoryInfo(tb_Path.Text);
             if (di.Exists)
             {
                 ListDictionary(Tree_Directory, tb_Path.Text);
-                logController.LogWrite(rtb_log, "", 3, LogPath_set);
+                logController.LogWrite(rtb_log, "", 3);
             }
             else MessageBox.Show("Try again");
         }
-
+        private void tvdir_AfterCheck(object sender, TreeViewEventArgs e) //Check with children Nodes
+        {
+            var node = e.Node;
+            var children = node.Nodes;
+            for (int K = 0; K < children.Count; K++) { children[K].Checked = node.Checked; }
+        }
+        ////For Make TreeView////
         private void ListDictionary(System.Windows.Forms.TreeView tree_Directory, string text)
         {
             tree_Directory.Nodes.Clear();
@@ -92,23 +98,19 @@ namespace AutoRemoveFile
                 var rootDirectoryInfo = new DirectoryInfo(text);    //최상위 디렉토리 값 저장
                 tree_Directory.Nodes.Add(CreatedirectoryNode(rootDirectoryInfo));
             }
-            catch(Exception ex){logController.LogWrite(rtb_log, ex.Message, 1, LogPath_set); }
+            catch(Exception ex){logController.LogWrite(rtb_log, ex.Message, 1); }
         }
         private TreeNode CreatedirectoryNode(DirectoryInfo directoryInfo)
         {
             var directoryNode = new TreeNode(directoryInfo.Name);
             foreach (var dir in directoryInfo.GetDirectories()) {
                 try{directoryNode.Nodes.Add(CreatedirectoryNode(dir)); }
-                catch(Exception ex){logController.LogWrite(rtb_log, ex.Message, 1, LogPath_set); }
+                catch(Exception ex){logController.LogWrite(rtb_log, ex.Message, 1); }
             }
             return directoryNode;
         }
-        private void tvdir_AfterCheck(object sender, TreeViewEventArgs e)
-        {
-            var node = e.Node;
-            var children = node.Nodes;
-            for (int K = 0; K < children.Count; K++) { children[K].Checked = node.Checked; }
-        }
+        ////////////////////////
+
         #endregion
 
         #region TreeView에서 선택한 경로를 Delete List로 연결
@@ -149,24 +151,38 @@ namespace AutoRemoveFile
             if (cb_AutoStart.Checked)
             {
                 autoStart.SetAuto();
-                MessageBox.Show("AutoStart is start");
+                Properties.Settings.Default.MainForm = false;
             }
-            else autoStart.DeleteAuto();
+            else {
+                autoStart.DeleteAuto();
+                Properties.Settings.Default.MainForm = false;
+            }
         }
-
+        private void Application_Idle(object sender, EventArgs e)
+        {
+            Application.Idle -= Application_Idle;
+            if (cb_AutoStart.Checked) this.Hide();
+        }
         #endregion
 
         #region log파일 저장경로 변경
         private void bt_logPath_Click(object sender, EventArgs e)
         {
             LogForm logForm = new LogForm();
-            logForm.LogPath = LogPath_set;
+            logForm.LogPath = Properties.Settings.Default.LogPath;
             logForm.ShowDialog();
-            LogPath_set = logForm.LogPath;
+            Properties.Settings.Default.LogPath = logForm.LogPath;
         }
         #endregion
 
-        #region ini파일로 로컬피시에 설정 값 저장
-        #endregion
-    }
+        #region setting파일로 로컬피시에 설정 값 저장        
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Save();
+            MessageBox.Show("Save!!");
+        }
+    #endregion
+
+
+}
 }

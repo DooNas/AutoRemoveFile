@@ -10,7 +10,7 @@ namespace AutoRemoveFile
 {
     internal class LogController
     {
-        public void LogWrite(RichTextBox rich, string message, int index, string logPath)
+        public void LogWrite(RichTextBox rich, string message, int index)
         {
             string[] ChoiceList =
             {
@@ -20,7 +20,8 @@ namespace AutoRemoveFile
                 "[{0}] Get Directory OK!",
                 "[{0}] [DEL] {1}"
             };
-            logPath = logPath + @"\Log";
+
+            string logPath = Properties.Settings.Default.LogPath + @"\Log";
             string FilePath = logPath + "\\Log_" + DateTime.Today.ToString("MMdd") + ".log";
             string temp;
 

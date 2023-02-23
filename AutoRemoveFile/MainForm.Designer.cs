@@ -195,7 +195,6 @@
             this.tb_Path.Name = "tb_Path";
             this.tb_Path.Size = new System.Drawing.Size(337, 25);
             this.tb_Path.TabIndex = 0;
-            this.tb_Path.Text = "D:\\DAT";
             this.tb_Path.Click += new System.EventHandler(this.tb_Path_Click);
             // 
             // panel3
@@ -224,6 +223,7 @@
             this.button1.TabIndex = 8;
             this.button1.Text = "SAVE";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // listb_deletePath
             // 
@@ -328,6 +328,7 @@
             // 
             // Context_TaryIcon
             // 
+            this.Context_TaryIcon.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.Context_TaryIcon.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sm_show,
             this.sm_exit});
