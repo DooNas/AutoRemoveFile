@@ -55,9 +55,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoStart.cs" />
-    <Compile Include="DeleteController.cs" />
-    <Compile Include="LogController.cs" />
+    <Compile Include="Controller\StartController.cs" />
+    <Compile Include="Controller\TimeController.cs" />
+    <Compile Include="Controller\DeleteController.cs" />
+    <Compile Include="Controller\LogController.cs" />
     <Compile Include="LogForm.cs">
       <SubType>Form</SubType>
     </Compile>

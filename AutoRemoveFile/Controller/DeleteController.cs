@@ -24,6 +24,7 @@ namespace AutoRemoveFile
                     {
                         DirectoryInfo[] dirInfo = di.GetDirectories();
                         string IDate = DateTime.Today.AddDays(-DeleteDay).ToString("yyyyMMDD");
+
                         foreach(DirectoryInfo dir in dirInfo)
                         {
                             if(IDate.CompareTo(dir.LastWriteTime.ToString("yyyyMMdd")) > 0)

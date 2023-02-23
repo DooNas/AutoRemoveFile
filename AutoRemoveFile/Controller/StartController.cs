@@ -9,10 +9,13 @@ using System.Windows.Forms;
 
 namespace AutoRemoveFile
 {
-    internal class AutoStart
+    internal class StartController
     {
+        //레지스터리에 저장되는 파일명
         private const string APPLICATION_NAME = "AutoRemoveFile";
-        RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(
+
+        //저장되는 레지스터리 경로
+        private RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(
             "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
         public RegistryKey GetKey
@@ -26,7 +29,6 @@ namespace AutoRemoveFile
                 APPLICATION_NAME, 
                 Environment.CurrentDirectory + "\\" + AppDomain.CurrentDomain.FriendlyName
                 );
-            
         }
 
         public void DeleteAuto()

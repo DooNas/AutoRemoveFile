@@ -20,7 +20,7 @@ namespace AutoRemoveFile
 
 
         LogController logController = new LogController();
-        AutoStart autoStart = new AutoStart();//자동실행
+        StartController autoStart = new StartController();//자동실행
         String[] DeleteDirList;
 
         private void Main_Load(object sender, EventArgs e)
