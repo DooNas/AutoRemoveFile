@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.bt_logPath = new System.Windows.Forms.Button();
             this.cb_AutoStart = new System.Windows.Forms.CheckBox();
@@ -42,9 +43,11 @@
             this.lb_Path = new System.Windows.Forms.Label();
             this.tb_Path = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.listb_deletePath = new System.Windows.Forms.ListBox();
             this.lb_hour = new System.Windows.Forms.Label();
             this.tb_lastupdate = new System.Windows.Forms.TextBox();
+            this.bt_setpath = new System.Windows.Forms.Button();
             this.lb_Delete = new System.Windows.Forms.Label();
             this.lb_lastupdate = new System.Windows.Forms.Label();
             this.lb_Tree_Directory = new System.Windows.Forms.Label();
@@ -55,8 +58,6 @@
             this.Context_TaryIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sm_show = new System.Windows.Forms.ToolStripMenuItem();
             this.sm_exit = new System.Windows.Forms.ToolStripMenuItem();
-            this.bt_setpath = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -214,6 +215,16 @@
             this.panel3.Size = new System.Drawing.Size(806, 408);
             this.panel3.TabIndex = 2;
             // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(542, 368);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(253, 34);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "SAVE";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // listb_deletePath
             // 
             this.listb_deletePath.FormattingEnabled = true;
@@ -243,6 +254,17 @@
             this.tb_lastupdate.TabIndex = 6;
             this.tb_lastupdate.Text = "48";
             this.tb_lastupdate.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // bt_setpath
+            // 
+            this.bt_setpath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.bt_setpath.Location = new System.Drawing.Point(12, 352);
+            this.bt_setpath.Name = "bt_setpath";
+            this.bt_setpath.Size = new System.Drawing.Size(268, 50);
+            this.bt_setpath.TabIndex = 3;
+            this.bt_setpath.Text = "SETTING";
+            this.bt_setpath.UseVisualStyleBackColor = true;
+            this.bt_setpath.Click += new System.EventHandler(this.bt_Path_Click);
             // 
             // lb_Delete
             // 
@@ -300,12 +322,12 @@
             // Tray_Icon
             // 
             this.Tray_Icon.ContextMenuStrip = this.Context_TaryIcon;
+            this.Tray_Icon.Icon = ((System.Drawing.Icon)(resources.GetObject("Tray_Icon.Icon")));
             this.Tray_Icon.Text = "파일정리";
             this.Tray_Icon.Visible = true;
             // 
             // Context_TaryIcon
             // 
-            this.Context_TaryIcon.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.Context_TaryIcon.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sm_show,
             this.sm_exit});
@@ -323,27 +345,6 @@
             this.sm_exit.Name = "sm_exit";
             this.sm_exit.Size = new System.Drawing.Size(115, 24);
             this.sm_exit.Text = "Exit";
-            // 
-            // bt_setpath
-            // 
-            this.bt_setpath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.bt_setpath.Location = new System.Drawing.Point(12, 352);
-            this.bt_setpath.Name = "bt_setpath";
-            this.bt_setpath.Size = new System.Drawing.Size(268, 50);
-            this.bt_setpath.TabIndex = 3;
-            this.bt_setpath.Text = "SETTING";
-            this.bt_setpath.UseVisualStyleBackColor = true;
-            this.bt_setpath.Click += new System.EventHandler(this.bt_Path_Click);
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(542, 368);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(253, 34);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "SAVE";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 

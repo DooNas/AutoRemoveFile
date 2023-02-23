@@ -10,7 +10,7 @@ namespace AutoRemoveFile
 {
     internal class LogController
     {
-        public void LogWrite(RichTextBox rich, string message, int index, string logPath = "")
+        public void LogWrite(RichTextBox rich, string message, int index, string logPath)
         {
             string[] ChoiceList =
             {
@@ -30,12 +30,13 @@ namespace AutoRemoveFile
             try
             {
                 if (!di.Exists) Directory.CreateDirectory(logPath);
+
                 temp = string.Format(ChoiceList[index], DateTime.Now, message);
                 rich.AppendText(temp + "\n");
 
                 if (!fi.Exists)
                 {
-                    using (StreamWriter sw = new StreamWriter(FilePath))//없는 경우
+                    using (StreamWriter sw = new StreamWriter(FilePath))//file is no here
                     {
                         sw.WriteLine(temp);
                         sw.Close();
@@ -43,7 +44,7 @@ namespace AutoRemoveFile
                 }
                 else
                 {
-                    using (StreamWriter sw = File.AppendText(FilePath))//있는 경우
+                    using (StreamWriter sw = File.AppendText(FilePath))//file is here
                     {
                         sw.WriteLine(temp);
                         sw.Close();

@@ -9,19 +9,33 @@ namespace AutoRemoveFile
 {
     public partial class MainForm : Form
     {
-        
         public MainForm()
         {
             InitializeComponent();
 
-            this.Load += Tray_Icon_Load;
-            Tray_Icon.MouseDoubleClick += Tray_Icon_MouseDoubleClick;
+            TrayIconAction();
         }
-
         LogController logController = new LogController();
-        string LogPath_set = Environment.CurrentDirectory;
+        private string LogPath_set = Environment.CurrentDirectory;  //ㅣog저장 위치
 
         #region 트레이 아이콘
+        private void TrayIconAction()
+        {
+            this.FormClosing += MainForm_FormClosing;
+            this.Load += Tray_Icon_Load;
+            Tray_Icon.MouseDoubleClick += Tray_Icon_MouseDoubleClick;
+            sm_show.Click += Sm_show_Click;
+            sm_exit.Click += Sm_exit_Click;
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)//트레이아이콘으로
+            {
+                this.Hide();
+                e.Cancel = true;
+            }
+        }
         private void Tray_Icon_Load(object sender, EventArgs e)
         {
             Tray_Icon.ContextMenuStrip = Context_TaryIcon;
@@ -31,6 +45,17 @@ namespace AutoRemoveFile
             this.ShowInTaskbar= true;
             this.Visible = true;
             this.WindowState = FormWindowState.Normal;
+        }
+        private void Sm_show_Click(object sender, EventArgs e)
+        {
+            this.ShowInTaskbar = true;
+            this.Visible = true;
+            this.WindowState = FormWindowState.Normal;
+        }
+        private void Sm_exit_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Are you Sure?");
+            Application.ExitThread();
         }
 
         #endregion
@@ -82,7 +107,7 @@ namespace AutoRemoveFile
         #endregion
 
         #region TreeView에서 선택한 경로를 Delete List로 연결
-        private List<TreeNode> checkedNodes = new List<TreeNode>();
+        private List<TreeNode> checkedNodes = new List<TreeNode>(); //삭제를 담당할 경로
         private void bt_Path_Click(object sender, EventArgs e)
         {
             checkedNodes.Clear();//초기화
@@ -108,6 +133,9 @@ namespace AutoRemoveFile
         }
         #endregion
 
+        #region DeleteList를 기준으로 ㅁ시간마다 ㅁ시간 경과된 폴더 제거
+        #endregion
+
         #region 윈도우 부팅시 자동시작
         private void AutoStart(object sender, EventArgs e)
         {
@@ -115,7 +143,7 @@ namespace AutoRemoveFile
         }
 
         #endregion
-
+        #region log파일 저장경로 변경
         private void bt_logPath_Click(object sender, EventArgs e)
         {
             LogForm logForm = new LogForm();
@@ -123,5 +151,6 @@ namespace AutoRemoveFile
             logForm.ShowDialog();
             LogPath_set = logForm.LogPath;
         }
+        #endregion
     }
 }
