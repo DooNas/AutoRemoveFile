@@ -21,21 +21,32 @@ namespace AutoRemoveFile
 
         LogController logController = new LogController();
         StartController autoStart = new StartController();//자동실행
+        DeleteController dtcontroller = new DeleteController();
+        TimeController timecontroller = new TimeController();
         String[] DeleteDirList;
 
         private void Main_Load(object sender, EventArgs e)
         {
+            //트레이 아이콘
             tb_Path.Text = Properties.Settings.Default.DirPath;
             Tray_Icon.ContextMenuStrip = Context_TaryIcon;
 
+            //자동 시작
             if (autoStart.GetKey.GetValue("AutoRemoveFile") == null) cb_AutoStart.Checked = false;
             else cb_AutoStart.Checked = true;
 
-            if(Properties.Settings.Default.DeleteListPath != string.Empty)
+            //시간
+            tb_lastupdate.Text = Properties.Settings.Default.LastUpdate_h.ToString();
+            tb_Time.Text = Properties.Settings.Default.Interval_h.ToString();
+
+            //삭제대상인 디렉토리 목록
+            if (Properties.Settings.Default.DeleteListPath != string.Empty)
             {
                 DeleteDirList = Properties.Settings.Default.DeleteListPath.Split('|');
                 foreach(string path in DeleteDirList) listb_deletePath.Items.Add(path);
             }
+            dtcontroller.Setting(DeleteDirList, rtb_log, int.Parse(tb_Time.Text));
+            dtcontroller.Interval_Delete(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(Double.Parse(tb_lastupdate.Text) * 3600));
             GC.Collect();   //가비지 컬렉터
         }
 
@@ -105,7 +116,7 @@ namespace AutoRemoveFile
         ////For Make TreeView////
         private void ListDictionary(System.Windows.Forms.TreeView tree_Directory, string text)
         {
-            tree_Directory.Nodes.Clear();
+            tree_Directory.Nodes.Clear();//리셋
             try
             {
                 var rootDirectoryInfo = new DirectoryInfo(text);    //최상위 디렉토리 값 저장
@@ -117,8 +128,8 @@ namespace AutoRemoveFile
         {
             var directoryNode = new TreeNode(directoryInfo.Name);
             foreach (var dir in directoryInfo.GetDirectories()) {
-                try{directoryNode.Nodes.Add(CreatedirectoryNode(dir)); }
-                catch(Exception ex){logController.LogWrite(rtb_log, ex.Message, 1); }
+                try{ directoryNode.Nodes.Add(CreatedirectoryNode(dir)); }
+                catch(Exception ex){ logController.LogWrite(rtb_log, ex.Message, 1); }
             }
             return directoryNode;
         }
@@ -176,7 +187,13 @@ namespace AutoRemoveFile
         private void Application_Idle(object sender, EventArgs e)
         {
             Application.Idle -= Application_Idle;
-            if (cb_AutoStart.Checked) this.Hide();
+            if (cb_AutoStart.Checked) this.Hide(); 
+            dtcontroller.Setting(DeleteDirList, rtb_log, int.Parse(tb_Time.Text));
+            dtcontroller.Interval_Delete(
+                TimeSpan.FromSeconds(0),
+                TimeSpan.FromSeconds(Double.Parse(tb_lastupdate.Text))
+                );
+            GC.Collect();   //가비지 컬렉터
         }
         #endregion
 
@@ -193,6 +210,10 @@ namespace AutoRemoveFile
         #region setting파일로 로컬피시에 설정 값 저장        
         private void button1_Click(object sender, EventArgs e)
         {
+            //시간
+            Properties.Settings.Default.LastUpdate_h = int.Parse(tb_lastupdate.Text);
+            Properties.Settings.Default.Interval_h = int.Parse(tb_Time.Text);
+
             Properties.Settings.Default.Save();
             MessageBox.Show("Save!!");
         }

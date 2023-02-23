@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace AutoRemoveFile
 {
     internal class TimeController
     {
         public System.Threading.Timer myTimer;
+
+
 
         public void T_start(TimerCallback callback, int starttime, int endtime)
         {
