@@ -18,7 +18,8 @@ namespace AutoRemoveFile
                 "[{0}] The deletion failed: {1}",
                 "[{0}] Get Directory info... PATH:{1}",
                 "[{0}] Get Directory OK!",
-                "[{0}] [DEL] {1}"
+                "[{0}] [DEL] {1}",
+                "Finish Delete Directories. Wait for next callback! ({0} seconds interval)"
             };
 
             string logPath = Properties.Settings.Default.LogPath + @"\Log";

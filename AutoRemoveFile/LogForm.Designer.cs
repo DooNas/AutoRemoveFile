@@ -36,7 +36,7 @@
             // Logbt_Check
             // 
             this.Logbt_Check.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Logbt_Check.Location = new System.Drawing.Point(444, 12);
+            this.Logbt_Check.Location = new System.Drawing.Point(448, 12);
             this.Logbt_Check.Name = "Logbt_Check";
             this.Logbt_Check.Size = new System.Drawing.Size(97, 25);
             this.Logbt_Check.TabIndex = 8;
@@ -60,7 +60,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Logtb_Path.Location = new System.Drawing.Point(87, 12);
             this.Logtb_Path.Name = "Logtb_Path";
-            this.Logtb_Path.Size = new System.Drawing.Size(351, 25);
+            this.Logtb_Path.Size = new System.Drawing.Size(355, 25);
             this.Logtb_Path.TabIndex = 6;
             this.Logtb_Path.Text = "D:\\DAT";
             this.Logtb_Path.Click += new System.EventHandler(this.Logtb_Path_Click);
@@ -70,10 +70,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(553, 44);
+            this.ClientSize = new System.Drawing.Size(557, 45);
             this.Controls.Add(this.Logbt_Check);
             this.Controls.Add(this.lb_Path);
             this.Controls.Add(this.Logtb_Path);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "LogForm";
             this.Text = "LogForm";
             this.Load += new System.EventHandler(this.LogForm_Load);
