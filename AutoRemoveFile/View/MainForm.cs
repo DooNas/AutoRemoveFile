@@ -22,7 +22,6 @@ namespace AutoRemoveFile
         LogController logController = new LogController();
         StartController autoStart = new StartController();//자동실행
         DeleteController dtcontroller = new DeleteController();
-        TimeController timecontroller = new TimeController();
         String[] DeleteDirList;
 
         private void Main_Load(object sender, EventArgs e)
@@ -45,8 +44,12 @@ namespace AutoRemoveFile
                 DeleteDirList = Properties.Settings.Default.DeleteListPath.Split('|');
                 foreach(string path in DeleteDirList) listb_deletePath.Items.Add(path);
             }
-            dtcontroller.Setting(DeleteDirList, rtb_log, int.Parse(tb_lastupdate.Text), int.Parse(tb_Time.Text));
-            dtcontroller.Interval_Delete(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(Double.Parse(tb_Time.Text) * 3600));
+            dtcontroller.Setting(
+                DeleteDirList, 
+                rtb_log, 
+                int.Parse(tb_lastupdate.Text),
+                int.Parse(tb_Time.Text));
+            dtcontroller.Interval_Delete();
             GC.Collect();   //가비지 컬렉터
         }
 
@@ -158,18 +161,20 @@ namespace AutoRemoveFile
         {
             listb_deletePath.Items.Clear();
             Properties.Settings.Default.DeleteListPath = string.Empty;
+            string path = string.Empty;
             foreach (TreeNode node in nodes)
             {
-                string path = node.FullPath;
+                string[] Node_path = node.FullPath.ToString().Split('\\');
+                for (int index = 1; index < Node_path.Length; index++)
+                {
+                    path = Properties.Settings.Default.DirPath+ "\\" + Node_path[index];
+                }
                 Properties.Settings.Default.DeleteListPath += path + "|";
                 listb_deletePath.Items.Add(path);
             }
         }
         #endregion
 
-        #region DeleteList를 기준으로 ㅁ시간마다 ㅁ시간 경과된 폴더 제거
-
-        #endregion
 
         #region 윈도우 부팅시 자동시작
         private void AutoStart(object sender, EventArgs e)
@@ -188,11 +193,12 @@ namespace AutoRemoveFile
         {
             Application.Idle -= Application_Idle;
             if (cb_AutoStart.Checked) this.Hide(); 
-            dtcontroller.Setting(DeleteDirList, rtb_log, int.Parse(tb_Time.Text));
-            dtcontroller.Interval_Delete(
-                TimeSpan.FromSeconds(0),
-                TimeSpan.FromSeconds(Double.Parse(tb_lastupdate.Text))
+            dtcontroller.Setting(
+                DeleteDirList, rtb_log,
+                int.Parse(tb_lastupdate.Text),
+                int.Parse(tb_Time.Text)
                 );
+            dtcontroller.Interval_Delete();
             GC.Collect();   //가비지 컬렉터
         }
         #endregion
@@ -215,7 +221,15 @@ namespace AutoRemoveFile
             Properties.Settings.Default.Interval_h = int.Parse(tb_Time.Text);
 
             Properties.Settings.Default.Save();
-            MessageBox.Show("Save!!");
+            MessageBox.Show("Save!!"); 
+            dtcontroller.Setting(
+                DeleteDirList, 
+                rtb_log,
+                int.Parse(tb_lastupdate.Text),
+                int.Parse(tb_Time.Text)
+                );
+            dtcontroller.Interval_Delete();
+            GC.Collect();   //가비지 컬렉터
         }
         #endregion
 
