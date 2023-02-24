@@ -21,7 +21,7 @@ namespace AutoRemoveFile
         public void Set(string[] nfolderDir,int nDeleteHour, int nInterverHour)
         {
             folderDir = nfolderDir;
-            DeleteHour = nDeleteHour; //24시간 몫만 출력
+            DeleteHour = nDeleteHour;
             InterverHour = nInterverHour;
         }
         static LogController logcont = new LogController(); //로그 저장.

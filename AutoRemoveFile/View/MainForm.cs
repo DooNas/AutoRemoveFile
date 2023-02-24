@@ -135,6 +135,7 @@ namespace AutoRemoveFile
         private void bt_Path_Click(object sender, EventArgs e)
         {
             checkedNodes.Clear();//초기화
+            Properties.Settings.Default.DeleteListPath = string.Empty;
             CheckedNodes(Tree_Directory.Nodes);
             AddListBox_DeletePath(checkedNodes);
             GC.Collect();   //가비지 컬렉터
@@ -150,7 +151,6 @@ namespace AutoRemoveFile
         private void AddListBox_DeletePath(List<TreeNode> nodes)
         {
             listb_deletePath.Items.Clear();
-            Properties.Settings.Default.DeleteListPath = string.Empty;
             string path = string.Empty;
             foreach (TreeNode node in nodes)
             {
@@ -214,7 +214,7 @@ namespace AutoRemoveFile
         #endregion
 
         #region setting파일로 로컬피시에 설정 값 저장
-        private void button1_Click(object sender, EventArgs e)
+        private void btSave_Click(object sender, EventArgs e)
         {
             //시간
             Properties.Settings.Default.LastUpdate_h = int.Parse(tb_lastupdate.Text);
@@ -233,7 +233,5 @@ namespace AutoRemoveFile
             GC.Collect();   //가비지 컬렉터
         }
         #endregion
-
-
     }
 }
