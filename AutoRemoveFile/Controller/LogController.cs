@@ -10,16 +10,17 @@ namespace AutoRemoveFile
 {
     internal class LogController
     {
-        public void LogWrite(RichTextBox rich, string message, int index)
+        public string LogWrite(string message, int index)
         {
             string[] ChoiceList =
             {
-                "",
+                "[{0}] {1}",
                 "[{0}] The deletion failed: {1}",
                 "[{0}] Get Directory info... PATH:{1}",
                 "[{0}] Get Directory OK!",
                 "[{0}] [DEL] {1}",
-                "Finish Delete Directories. Wait for next callback! ({0} seconds interval)"
+                "Finish Delete Directories. Wait for next callback! ({0} seconds interval)",
+                "[{0}]  Delete Directories that are out of storage "
             };
 
             string logPath = Properties.Settings.Default.LogPath + @"\Log";
@@ -29,13 +30,10 @@ namespace AutoRemoveFile
             DirectoryInfo di = new DirectoryInfo(logPath);
             FileInfo fi = new FileInfo(FilePath);
 
+            temp = string.Format(ChoiceList[index], DateTime.Now, message);
             try
             {
                 if (!di.Exists) Directory.CreateDirectory(logPath);
-
-                temp = string.Format(ChoiceList[index], DateTime.Now, message);
-                rich.AppendText(temp + "\n");
-
                 if (!fi.Exists)
                 {
                     using (StreamWriter sw = new StreamWriter(FilePath))//file is no here
@@ -52,8 +50,10 @@ namespace AutoRemoveFile
                         sw.Close();
                     }
                 }
+                return temp + "\n";
             }
-            catch (Exception) { }
+            catch (Exception ex) { return string.Format(ChoiceList[1], DateTime.Now, ex.Message) + "\n"; }
+            
         }
     }
 }

@@ -14,72 +14,72 @@ namespace AutoRemoveFile
 {
     internal class DeleteController
     {
-        static RichTextBox rtextBox { get; set; }
         static string[] folderDir { get; set; }
         static int DeleteHour { get; set; }
         static int InterverHour { get; set; }
 
-        public void Setting(string[] nfolderDir, RichTextBox nrtextBox, int nDeleteHour, int nInterverHour)
+        public void Setting(string[] nfolderDir,int nDeleteHour, int nInterverHour)
         {
             folderDir = nfolderDir;
-            rtextBox = nrtextBox;
             DeleteHour = nDeleteHour; //24시간 몫만 출력
             InterverHour = nInterverHour;
         }
-
+        static LogController logcont = new LogController(); //로그 저장.
 
         private static System.Threading.Timer CheckTimer;
         public void Interval_Delete()
         {
             CheckTimer = new System.Threading.Timer(
-                deleteFolder,
+                DelFile,
                 null,
                 TimeSpan.FromSeconds(0),
                 TimeSpan.FromSeconds(InterverHour * 3600)
                 );
-            //deleteFolder(null);
         }
-
-        public static void deleteFolder(object state)
+        private static void DelFile(object state)
         {
-            CheckTimer.Change(Timeout.Infinite, Timeout.Infinite);
-            LogController logcont = new LogController(); //로그 저장.
+            CheckTimer.Change(Timeout.Infinite, Timeout.Infinite); 
+            logcont.LogWrite("", 0);
+
             try
             {
-                for (int index = 0; index < folderDir.Length; index++)
+                string[] deletePath = folderDir;
+                foreach (string path in deletePath)
                 {
-                
-                    DirectoryInfo di = new DirectoryInfo(folderDir[index]);
+                    DirectoryInfo di = new DirectoryInfo(path);
                     if (di.Exists)
                     {
-                        DirectoryInfo[] dirInfo = di.GetDirectories();
-                        string IDate = DateTime.Today.AddHours(-DeleteHour).ToString("yyyy-MM-dd hh:mm:ss");
-
-                        foreach(DirectoryInfo dir in dirInfo)
+                        logcont.LogWrite( path, 2);
+                        DirectoryInfo[] dirInfo = di.GetDirectories("*", SearchOption.AllDirectories);
+                        logcont.LogWrite("", 3);
+                        string lData = DateTime.Now.AddHours(-DeleteHour).ToString("yyyy-MM-dd hh:mm:ss");
+                        foreach (DirectoryInfo dir in dirInfo.Reverse())
                         {
-                            if(IDate.CompareTo(dir.LastWriteTime.ToString("yyyy-MM-dd hh:mm:ss")) > 0)
+                            if (lData.CompareTo(dir.LastWriteTime.ToString("yyyy-MM-dd hh:mm:ss")) > 0)
                             {
                                 try
                                 {
-                                    dir.Attributes = FileAttributes.Normal;
+                                    logcont.LogWrite(dir.FullName, 4);
                                     dir.Delete(true);
+
                                 }
-                                catch (Exception ex) { logcont.LogWrite(rtextBox, ex.Message, 4); }
+                                catch (Exception ex) { logcont.LogWrite(ex.Message, 4); }
                                 GC.Collect();
                                 Thread.Sleep(20);
                             }
                         }
                     }
-                    else
-                    {
-                        logcont.LogWrite(rtextBox, "Specified file doesn't exist", 0);
-                    }
+                    else { logcont.LogWrite("Specified file doesn't exist", 0); }
                     GC.Collect();
                 }
-            } catch (Exception ex) { logcont.LogWrite(rtextBox, ex.Message, 4); }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
             GC.Collect();
-            CheckTimer.Change(TimeSpan.FromSeconds(InterverHour), TimeSpan.FromSeconds(InterverHour));
-            logcont.LogWrite(rtextBox, InterverHour.ToString(), 5);
+            CheckTimer.Change(TimeSpan.FromSeconds(InterverHour * 3600), TimeSpan.FromSeconds(InterverHour * 3600));
+            logcont.LogWrite((InterverHour * 3600).ToString(), 5);
         }
     }
 }
