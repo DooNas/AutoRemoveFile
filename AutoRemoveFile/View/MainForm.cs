@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -13,16 +14,16 @@ namespace AutoRemoveFile
         public MainForm()
         {
             InitializeComponent();
+
             this.Load += Main_Load;
-            Application.Idle += Application_Idle;
-            TrayIconAction();
+            Application.Idle += Application_Idle;//온로드 오류 대비
+            TrayIconAction();//트레이 아이콘
         }
 
-
-        LogController logController = new LogController();
+        LogController logController = new LogController();//로그생성
         StartController autoStart = new StartController();//자동실행
-        DeleteController dtcontroller = new DeleteController();
-        String[] DeleteDirList;
+        DeleteController dtcontroller = new DeleteController();//폴더삭제
+        String[] DeleteDirList; //삭제폴더 리스트
 
         private void Main_Load(object sender, EventArgs e)
         {
@@ -38,18 +39,7 @@ namespace AutoRemoveFile
             tb_lastupdate.Text = Properties.Settings.Default.LastUpdate_h.ToString();
             tb_Time.Text = Properties.Settings.Default.Interval_h.ToString();
 
-            //삭제대상인 디렉토리 목록
-            if (Properties.Settings.Default.DeleteListPath != string.Empty)
-            {
-                DeleteDirList = Properties.Settings.Default.DeleteListPath.Split('|');
-                foreach(string path in DeleteDirList) listb_deletePath.Items.Add(path);
-            }
-            dtcontroller.Setting(
-                DeleteDirList, 
-                rtb_log, 
-                int.Parse(tb_lastupdate.Text),
-                int.Parse(tb_Time.Text));
-            dtcontroller.Interval_Delete();
+
             GC.Collect();   //가비지 컬렉터
         }
 
@@ -99,12 +89,12 @@ namespace AutoRemoveFile
         }
         private void bt_Check_Click(object sender, EventArgs e) //Move to CheckList<Treeview>
         {
-            logController.LogWrite(rtb_log, tb_Path.Text, 2);
+            rtb_log.AppendText(logController.LogWrite(tb_Path.Text, 2));
             DirectoryInfo di = new DirectoryInfo(tb_Path.Text);
             if (di.Exists)
             {
                 ListDictionary(Tree_Directory, tb_Path.Text);
-                logController.LogWrite(rtb_log, "", 3);
+                rtb_log.AppendText(logController.LogWrite("", 3));
             }
             else MessageBox.Show("Try again");
             GC.Collect();   //가비지 컬렉터
@@ -125,14 +115,14 @@ namespace AutoRemoveFile
                 var rootDirectoryInfo = new DirectoryInfo(text);    //최상위 디렉토리 값 저장
                 tree_Directory.Nodes.Add(CreatedirectoryNode(rootDirectoryInfo));
             }
-            catch(Exception ex){logController.LogWrite(rtb_log, ex.Message, 1); }
+            catch(Exception ex){ rtb_log.AppendText(logController.LogWrite(ex.Message, 1)); }
         }
         private TreeNode CreatedirectoryNode(DirectoryInfo directoryInfo)
         {
             var directoryNode = new TreeNode(directoryInfo.Name);
             foreach (var dir in directoryInfo.GetDirectories()) {
-                try{ directoryNode.Nodes.Add(CreatedirectoryNode(dir)); }
-                catch(Exception ex){ logController.LogWrite(rtb_log, ex.Message, 1); }
+                try { directoryNode.Nodes.Add(CreatedirectoryNode(dir)); }
+                catch (Exception ex) { rtb_log.AppendText(logController.LogWrite(ex.Message, 1)); }
             }
             return directoryNode;
         }
@@ -165,10 +155,14 @@ namespace AutoRemoveFile
             foreach (TreeNode node in nodes)
             {
                 string[] Node_path = node.FullPath.ToString().Split('\\');
-                for (int index = 1; index < Node_path.Length; index++)
+                if(Node_path.Length > 1)
                 {
-                    path = Properties.Settings.Default.DirPath+ "\\" + Node_path[index];
-                }
+                    for (int index = 1; index < Node_path.Length; index++)
+                    {
+                        path = tb_Path.Text + "\\" + Node_path[index];
+                    }
+                }else { path = tb_Path.Text; }
+                
                 Properties.Settings.Default.DeleteListPath += path + "|";
                 listb_deletePath.Items.Add(path);
             }
@@ -192,12 +186,18 @@ namespace AutoRemoveFile
         private void Application_Idle(object sender, EventArgs e)
         {
             Application.Idle -= Application_Idle;
-            if (cb_AutoStart.Checked) this.Hide(); 
-            dtcontroller.Setting(
-                DeleteDirList, rtb_log,
+            if (cb_AutoStart.Checked) this.Hide();
+
+            //삭제대상인 디렉토리 목록
+            if (Properties.Settings.Default.DeleteListPath != string.Empty)
+            {
+                DeleteDirList = Properties.Settings.Default.DeleteListPath.Split('|');
+                foreach (string path in DeleteDirList) listb_deletePath.Items.Add(path);
+            }
+            dtcontroller.Set(
+                DeleteDirList,
                 int.Parse(tb_lastupdate.Text),
-                int.Parse(tb_Time.Text)
-                );
+                int.Parse(tb_Time.Text));
             dtcontroller.Interval_Delete();
             GC.Collect();   //가비지 컬렉터
         }
@@ -222,9 +222,10 @@ namespace AutoRemoveFile
 
             Properties.Settings.Default.Save();
             MessageBox.Show("Save!!"); 
-            dtcontroller.Setting(
+
+            //혹시모를 변동사항을 대비하여 업데이트 진행
+            dtcontroller.Set(
                 DeleteDirList, 
-                rtb_log,
                 int.Parse(tb_lastupdate.Text),
                 int.Parse(tb_Time.Text)
                 );
