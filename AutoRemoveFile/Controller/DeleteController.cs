@@ -14,11 +14,11 @@ namespace AutoRemoveFile
 {
     internal class DeleteController
     {
-        static string[] folderDir { get; set; }
-        static int DeleteHour { get; set; }
-        static int InterverHour { get; set; }
+        private static string[] folderDir { get; set; }
+        private static int DeleteHour { get; set; }
+        private static int InterverHour { get; set; }
 
-        public void Setting(string[] nfolderDir,int nDeleteHour, int nInterverHour)
+        public void Set(string[] nfolderDir,int nDeleteHour, int nInterverHour)
         {
             folderDir = nfolderDir;
             DeleteHour = nDeleteHour; //24시간 몫만 출력
@@ -46,21 +46,40 @@ namespace AutoRemoveFile
                 string[] deletePath = folderDir;
                 foreach (string path in deletePath)
                 {
+                    logcont.LogWrite(path, 2); //Connecting..logMake
                     DirectoryInfo di = new DirectoryInfo(path);
+                    logcont.LogWrite("", 3);//Connected logMake
                     if (di.Exists)
                     {
-                        logcont.LogWrite( path, 2);
-                        DirectoryInfo[] dirInfo = di.GetDirectories("*", SearchOption.AllDirectories);
-                        logcont.LogWrite("", 3);
+                        DirectoryInfo[] dirInfo = di.GetDirectories();
                         string lData = DateTime.Now.AddHours(-DeleteHour).ToString("yyyy-MM-dd hh:mm:ss");
-                        foreach (DirectoryInfo dir in dirInfo.Reverse())
+
+                        if (dirInfo.Length > 0)//하위 디렉토리 밑에도 추가적으로 있는 경우
                         {
-                            if (lData.CompareTo(dir.LastWriteTime.ToString("yyyy-MM-dd hh:mm:ss")) > 0)
+                            foreach (DirectoryInfo dir in dirInfo.Reverse())
+                            {
+                                if (lData.CompareTo(dir.LastWriteTime.ToString("yyyy-MM-dd hh:mm:ss")) > 0)
+                                {
+                                    try
+                                    {
+                                        logcont.LogWrite(dir.FullName, 4);
+                                        dir.Delete(true);
+
+                                    }
+                                    catch (Exception ex) { logcont.LogWrite(ex.Message, 4); }
+                                    GC.Collect();
+                                    Thread.Sleep(20);
+                                }
+                            }
+                        }
+                        else//하위 디렉토리 밑에도 추가적으로 없는 경우
+                        {
+                            if (lData.CompareTo(di.LastWriteTime.ToString("yyyy-MM-dd hh:mm:ss")) > 0)
                             {
                                 try
                                 {
-                                    logcont.LogWrite(dir.FullName, 4);
-                                    dir.Delete(true);
+                                    logcont.LogWrite(di.FullName, 4);
+                                    di.Delete(true);
 
                                 }
                                 catch (Exception ex) { logcont.LogWrite(ex.Message, 4); }
@@ -68,6 +87,7 @@ namespace AutoRemoveFile
                                 Thread.Sleep(20);
                             }
                         }
+                        
                     }
                     else { logcont.LogWrite("Specified file doesn't exist", 0); }
                     GC.Collect();

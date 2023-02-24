@@ -39,17 +39,7 @@ namespace AutoRemoveFile
             tb_lastupdate.Text = Properties.Settings.Default.LastUpdate_h.ToString();
             tb_Time.Text = Properties.Settings.Default.Interval_h.ToString();
 
-            //삭제대상인 디렉토리 목록
-            if (Properties.Settings.Default.DeleteListPath != string.Empty)
-            {
-                DeleteDirList = Properties.Settings.Default.DeleteListPath.Split('|');
-                foreach(string path in DeleteDirList) listb_deletePath.Items.Add(path);
-            }
-            dtcontroller.Setting(
-                DeleteDirList, 
-                int.Parse(tb_lastupdate.Text),
-                int.Parse(tb_Time.Text));
-            dtcontroller.Interval_Delete();
+
             GC.Collect();   //가비지 컬렉터
         }
 
@@ -171,7 +161,7 @@ namespace AutoRemoveFile
                     {
                         path = tb_Path.Text + "\\" + Node_path[index];
                     }
-                }else { path = tb_Path.Text + "\\" + Node_path[0]; }
+                }else { path = tb_Path.Text; }
                 
                 Properties.Settings.Default.DeleteListPath += path + "|";
                 listb_deletePath.Items.Add(path);
@@ -196,12 +186,18 @@ namespace AutoRemoveFile
         private void Application_Idle(object sender, EventArgs e)
         {
             Application.Idle -= Application_Idle;
-            if (cb_AutoStart.Checked) this.Hide(); 
-            dtcontroller.Setting(
+            if (cb_AutoStart.Checked) this.Hide();
+
+            //삭제대상인 디렉토리 목록
+            if (Properties.Settings.Default.DeleteListPath != string.Empty)
+            {
+                DeleteDirList = Properties.Settings.Default.DeleteListPath.Split('|');
+                foreach (string path in DeleteDirList) listb_deletePath.Items.Add(path);
+            }
+            dtcontroller.Set(
                 DeleteDirList,
                 int.Parse(tb_lastupdate.Text),
-                int.Parse(tb_Time.Text)
-                );
+                int.Parse(tb_Time.Text));
             dtcontroller.Interval_Delete();
             GC.Collect();   //가비지 컬렉터
         }
@@ -226,7 +222,9 @@ namespace AutoRemoveFile
 
             Properties.Settings.Default.Save();
             MessageBox.Show("Save!!"); 
-            dtcontroller.Setting(
+
+            //혹시모를 변동사항을 대비하여 업데이트 진행
+            dtcontroller.Set(
                 DeleteDirList, 
                 int.Parse(tb_lastupdate.Text),
                 int.Parse(tb_Time.Text)
