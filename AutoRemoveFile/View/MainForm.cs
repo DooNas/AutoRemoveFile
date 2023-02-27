@@ -224,7 +224,9 @@ namespace AutoRemoveFile
 
             //삭제 리스트
             Properties.Settings.Default.DeleteListPath = string.Empty;//초기화
-            foreach (string path in DeleteDirList) Properties.Settings.Default.DeleteListPath += path + "|"; 
+            foreach (string path in DeleteDirList) Properties.Settings.Default.DeleteListPath += path + "|";
+            Properties.Settings.Default.DeleteListPath.TrimEnd('|');
+
 
             Properties.Settings.Default.Save();
             MessageBox.Show("Save!!"); 
