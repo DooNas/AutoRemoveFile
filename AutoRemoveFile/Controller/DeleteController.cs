@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -7,15 +8,17 @@ namespace AutoRemoveFile
 {
     internal class DeleteController
     {
-        private static string[] folderDir { get; set; }
-        private static int DeleteHour { get; set; }
-        private static int InterverHour { get; set; }
+        private static List<string> folderDir;
 
-        public void Set(string[] nfolderDir,int nDeleteHour, int nInterverHour)
+        private static ushort Interver = 3600;
+        private static ushort DeleteHour { get; set; }
+        private static ushort InterverHour { get; set; }
+
+        public void Set(List<string> nfolderDir,int nDeleteHour, int nInterverHour)
         {
             folderDir = nfolderDir;
-            DeleteHour = nDeleteHour;
-            InterverHour = nInterverHour;
+            DeleteHour = (ushort) nDeleteHour;  //0 ~  65,535 (2 byte)
+            InterverHour = (ushort) (nInterverHour* Interver);  //0 ~ 18 (2 byte)
         }
 
         private static System.Threading.Timer CheckTimer;
@@ -25,18 +28,17 @@ namespace AutoRemoveFile
                 DelFile,
                 null,
                 TimeSpan.FromSeconds(0),
-                TimeSpan.FromSeconds(InterverHour * 3600)
+                TimeSpan.FromSeconds(InterverHour)
                 );
         }
         private static void DelFile(object state)
         {
-            CheckTimer.Change(Timeout.Infinite, Timeout.Infinite);
+            CheckTimer.Change(Timeout.Infinite, Timeout.Infinite);  //기존 쓰레드 종료
             LogController.LogWrite("", 0);
 
             try
             {
-                string[] deletePath = folderDir;
-                foreach (string path in deletePath)
+                foreach (string path in folderDir)
                 {
                     LogController.LogWrite(path, 2); //Connecting..logMake
                     DirectoryInfo di = new DirectoryInfo(path);
@@ -46,7 +48,7 @@ namespace AutoRemoveFile
                         DirectoryInfo[] dirInfo = di.GetDirectories();
                         string lData = DateTime.Now.AddHours(-DeleteHour).ToString("yyyy-MM-dd hh:mm:ss");
 
-                        if (dirInfo.Length > 0)//하위 디렉토리 밑에도 추가적으로 있는 경우
+                        if (dirInfo.Length > 0)//하위 디렉토리 O
                         {
                             foreach (DirectoryInfo dir in dirInfo.Reverse())
                             {
@@ -64,7 +66,7 @@ namespace AutoRemoveFile
                                 }
                             }
                         }
-                        else//하위 디렉토리 밑에도 추가적으로 없는 경우
+                        else//하위 디렉토리 X
                         {
                             if (lData.CompareTo(di.LastWriteTime.ToString("yyyy-MM-dd hh:mm:ss")) > 0)
                             {
@@ -90,8 +92,10 @@ namespace AutoRemoveFile
                 Console.WriteLine(ex.ToString());
             }
             GC.Collect();
-            CheckTimer.Change(TimeSpan.FromSeconds(InterverHour * 3600), TimeSpan.FromSeconds(InterverHour * 3600));
-            LogController.LogWrite((InterverHour * 3600).ToString(), 5);
+            CheckTimer.Change(
+                TimeSpan.FromSeconds(InterverHour), 
+                TimeSpan.FromSeconds(InterverHour));
+            LogController.LogWrite(InterverHour.ToString(), 5);
         }
     }
 }

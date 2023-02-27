@@ -71,12 +71,12 @@ namespace AutoRemoveFile
             return string.Format(ChoiceList[index], DateTime.Now, message);
         }
 
-        public static string FileWriter(DirectoryInfo di, FileInfo fi, string temp) //파일 작성
+        public static string FileWriter(DirectoryInfo di, FileInfo fi, string temp) //
         {
             if (!di.Exists) Directory.CreateDirectory(LogDirPath);
             if (!fi.Exists)
             {
-                using (StreamWriter sw = new StreamWriter(LogFilePath))//file is no here
+                using (StreamWriter sw = new StreamWriter(LogFilePath))//Make File
                 {
                     sw.WriteLine(temp);
                     sw.Close();
@@ -84,7 +84,7 @@ namespace AutoRemoveFile
             }
             else
             {
-                using (StreamWriter sw = File.AppendText(LogFilePath))//file is here
+                using (StreamWriter sw = File.AppendText(LogFilePath))//File add
                 {
                     sw.WriteLine(temp);
                     sw.Close();
