@@ -43,7 +43,7 @@
             this.lb_Path = new System.Windows.Forms.Label();
             this.tb_Path = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.bt_SaveSetting = new System.Windows.Forms.Button();
             this.listb_deletePath = new System.Windows.Forms.ListBox();
             this.lb_hour = new System.Windows.Forms.Label();
             this.tb_lastupdate = new System.Windows.Forms.TextBox();
@@ -58,6 +58,7 @@
             this.Context_TaryIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sm_show = new System.Windows.Forms.ToolStripMenuItem();
             this.sm_exit = new System.Windows.Forms.ToolStripMenuItem();
+            this.bt_LoadLog = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -67,22 +68,26 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.bt_LoadLog);
+            this.panel1.Controls.Add(this.bt_SaveSetting);
             this.panel1.Controls.Add(this.bt_logPath);
+            this.panel1.Controls.Add(this.lb_hour);
             this.panel1.Controls.Add(this.cb_AutoStart);
+            this.panel1.Controls.Add(this.tb_lastupdate);
             this.panel1.Controls.Add(this.lb_log);
             this.panel1.Controls.Add(this.rtb_log);
+            this.panel1.Controls.Add(this.lb_lastupdate);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 442);
+            this.panel1.Location = new System.Drawing.Point(0, 244);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(816, 245);
+            this.panel1.Size = new System.Drawing.Size(660, 245);
             this.panel1.TabIndex = 0;
             // 
             // bt_logPath
             // 
-            this.bt_logPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.bt_logPath.Location = new System.Drawing.Point(12, 213);
+            this.bt_logPath.Location = new System.Drawing.Point(72, 9);
             this.bt_logPath.Name = "bt_logPath";
-            this.bt_logPath.Size = new System.Drawing.Size(97, 25);
+            this.bt_logPath.Size = new System.Drawing.Size(71, 25);
             this.bt_logPath.TabIndex = 6;
             this.bt_logPath.Text = "PATH";
             this.bt_logPath.UseVisualStyleBackColor = true;
@@ -93,7 +98,7 @@
             this.cb_AutoStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cb_AutoStart.AutoSize = true;
             this.cb_AutoStart.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cb_AutoStart.Location = new System.Drawing.Point(703, 217);
+            this.cb_AutoStart.Location = new System.Drawing.Point(549, 217);
             this.cb_AutoStart.Name = "cb_AutoStart";
             this.cb_AutoStart.Size = new System.Drawing.Size(99, 19);
             this.cb_AutoStart.TabIndex = 3;
@@ -115,9 +120,9 @@
             // 
             this.rtb_log.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtb_log.Location = new System.Drawing.Point(12, 40);
+            this.rtb_log.Location = new System.Drawing.Point(11, 40);
             this.rtb_log.Name = "rtb_log";
-            this.rtb_log.Size = new System.Drawing.Size(793, 167);
+            this.rtb_log.Size = new System.Drawing.Size(637, 167);
             this.rtb_log.TabIndex = 0;
             this.rtb_log.Text = "";
             // 
@@ -132,13 +137,13 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(816, 47);
+            this.panel2.Size = new System.Drawing.Size(660, 47);
             this.panel2.TabIndex = 1;
             // 
             // bt_Check
             // 
             this.bt_Check.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bt_Check.Location = new System.Drawing.Point(439, 12);
+            this.bt_Check.Location = new System.Drawing.Point(336, 12);
             this.bt_Check.Name = "bt_Check";
             this.bt_Check.Size = new System.Drawing.Size(97, 25);
             this.bt_Check.TabIndex = 5;
@@ -151,7 +156,7 @@
             this.lb_Time.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lb_Time.AutoSize = true;
             this.lb_Time.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lb_Time.Location = new System.Drawing.Point(736, 14);
+            this.lb_Time.Location = new System.Drawing.Point(599, 14);
             this.lb_Time.Name = "lb_Time";
             this.lb_Time.Size = new System.Drawing.Size(47, 20);
             this.lb_Time.TabIndex = 4;
@@ -160,7 +165,7 @@
             // tb_Time
             // 
             this.tb_Time.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_Time.Location = new System.Drawing.Point(696, 12);
+            this.tb_Time.Location = new System.Drawing.Point(559, 12);
             this.tb_Time.Name = "tb_Time";
             this.tb_Time.Size = new System.Drawing.Size(38, 25);
             this.tb_Time.TabIndex = 2;
@@ -172,7 +177,7 @@
             this.lb_Interval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lb_Interval.AutoSize = true;
             this.lb_Interval.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lb_Interval.Location = new System.Drawing.Point(585, 15);
+            this.lb_Interval.Location = new System.Drawing.Point(448, 15);
             this.lb_Interval.Name = "lb_Interval";
             this.lb_Interval.Size = new System.Drawing.Size(117, 20);
             this.lb_Interval.TabIndex = 3;
@@ -194,38 +199,34 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tb_Path.Location = new System.Drawing.Point(85, 12);
             this.tb_Path.Name = "tb_Path";
-            this.tb_Path.Size = new System.Drawing.Size(347, 25);
+            this.tb_Path.Size = new System.Drawing.Size(245, 25);
             this.tb_Path.TabIndex = 0;
             this.tb_Path.Click += new System.EventHandler(this.tb_Path_Click);
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.button1);
             this.panel3.Controls.Add(this.listb_deletePath);
-            this.panel3.Controls.Add(this.lb_hour);
-            this.panel3.Controls.Add(this.tb_lastupdate);
             this.panel3.Controls.Add(this.bt_setpath);
             this.panel3.Controls.Add(this.lb_Delete);
-            this.panel3.Controls.Add(this.lb_lastupdate);
             this.panel3.Controls.Add(this.lb_Tree_Directory);
             this.panel3.Controls.Add(this.Tree_Directory);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 47);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(816, 395);
+            this.panel3.Size = new System.Drawing.Size(660, 197);
             this.panel3.TabIndex = 2;
             // 
-            // button1
+            // bt_SaveSetting
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.bt_SaveSetting.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(542, 355);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(263, 34);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "SAVE";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.btSave_Click);
+            this.bt_SaveSetting.Location = new System.Drawing.Point(542, 3);
+            this.bt_SaveSetting.Name = "bt_SaveSetting";
+            this.bt_SaveSetting.Size = new System.Drawing.Size(106, 34);
+            this.bt_SaveSetting.TabIndex = 8;
+            this.bt_SaveSetting.Text = "SAVE";
+            this.bt_SaveSetting.UseVisualStyleBackColor = true;
+            this.bt_SaveSetting.Click += new System.EventHandler(this.btSave_Click);
             // 
             // listb_deletePath
             // 
@@ -234,9 +235,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listb_deletePath.FormattingEnabled = true;
             this.listb_deletePath.ItemHeight = 15;
-            this.listb_deletePath.Location = new System.Drawing.Point(304, 43);
+            this.listb_deletePath.Location = new System.Drawing.Point(304, 40);
             this.listb_deletePath.Name = "listb_deletePath";
-            this.listb_deletePath.Size = new System.Drawing.Size(501, 304);
+            this.listb_deletePath.Size = new System.Drawing.Size(345, 154);
             this.listb_deletePath.TabIndex = 7;
             // 
             // lb_hour
@@ -244,7 +245,7 @@
             this.lb_hour.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lb_hour.AutoSize = true;
             this.lb_hour.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lb_hour.Location = new System.Drawing.Point(489, 361);
+            this.lb_hour.Location = new System.Drawing.Point(489, 9);
             this.lb_hour.Name = "lb_hour";
             this.lb_hour.Size = new System.Drawing.Size(47, 20);
             this.lb_hour.TabIndex = 6;
@@ -253,7 +254,7 @@
             // tb_lastupdate
             // 
             this.tb_lastupdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.tb_lastupdate.Location = new System.Drawing.Point(451, 359);
+            this.tb_lastupdate.Location = new System.Drawing.Point(451, 7);
             this.tb_lastupdate.Name = "tb_lastupdate";
             this.tb_lastupdate.Size = new System.Drawing.Size(36, 25);
             this.tb_lastupdate.TabIndex = 6;
@@ -263,7 +264,8 @@
             // bt_setpath
             // 
             this.bt_setpath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.bt_setpath.Location = new System.Drawing.Point(12, 339);
+            this.bt_setpath.Location = new System.Drawing.Point(12, 143);
+            this.bt_setpath.Margin = new System.Windows.Forms.Padding(0);
             this.bt_setpath.Name = "bt_setpath";
             this.bt_setpath.Size = new System.Drawing.Size(268, 50);
             this.bt_setpath.TabIndex = 3;
@@ -286,7 +288,7 @@
             this.lb_lastupdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lb_lastupdate.AutoSize = true;
             this.lb_lastupdate.Font = new System.Drawing.Font("굴림", 12F);
-            this.lb_lastupdate.Location = new System.Drawing.Point(300, 361);
+            this.lb_lastupdate.Location = new System.Drawing.Point(300, 9);
             this.lb_lastupdate.Name = "lb_lastupdate";
             this.lb_lastupdate.Size = new System.Drawing.Size(159, 20);
             this.lb_lastupdate.TabIndex = 6;
@@ -307,9 +309,9 @@
             this.Tree_Directory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.Tree_Directory.CheckBoxes = true;
-            this.Tree_Directory.Location = new System.Drawing.Point(12, 43);
+            this.Tree_Directory.Location = new System.Drawing.Point(12, 40);
             this.Tree_Directory.Name = "Tree_Directory";
-            this.Tree_Directory.Size = new System.Drawing.Size(268, 290);
+            this.Tree_Directory.Size = new System.Drawing.Size(268, 100);
             this.Tree_Directory.TabIndex = 0;
             this.Tree_Directory.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.tvdir_AfterCheck);
             // 
@@ -350,15 +352,27 @@
             this.sm_exit.Size = new System.Drawing.Size(115, 24);
             this.sm_exit.Text = "Exit";
             // 
+            // bt_LoadLog
+            // 
+            this.bt_LoadLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bt_LoadLog.Location = new System.Drawing.Point(12, 213);
+            this.bt_LoadLog.Name = "bt_LoadLog";
+            this.bt_LoadLog.Size = new System.Drawing.Size(531, 25);
+            this.bt_LoadLog.TabIndex = 9;
+            this.bt_LoadLog.Text = "Load";
+            this.bt_LoadLog.UseVisualStyleBackColor = true;
+            this.bt_LoadLog.Click += new System.EventHandler(this.bt_LoadLog_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(816, 687);
+            this.ClientSize = new System.Drawing.Size(660, 489);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.MinimumSize = new System.Drawing.Size(579, 536);
+            this.MinimumSize = new System.Drawing.Size(678, 536);
             this.Name = "MainForm";
             this.Text = "AutoRemoveFile";
             this.panel1.ResumeLayout(false);
@@ -401,8 +415,9 @@
         private System.Windows.Forms.ToolStripMenuItem sm_exit;
         private System.Windows.Forms.Button bt_logPath;
         private System.Windows.Forms.ListBox listb_deletePath;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button bt_SaveSetting;
         private System.Windows.Forms.Button bt_setpath;
+        private System.Windows.Forms.Button bt_LoadLog;
     }
 }
 

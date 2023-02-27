@@ -19,6 +19,20 @@ namespace AutoRemoveFile
         private static string LogDirPath { get; set; }
         private static string LogFilePath { get; set; }
 
+        public static void LogRead(RichTextBox rich)
+        {
+            rich.Clear();
+            using (StreamReader r = File.OpenText(LogFilePath))
+            {
+                string line;
+                while ((line = r.ReadLine()) != null)
+                {
+                    rich.AppendText(line+"\n");
+                }
+            }
+            rich.ScrollToCaret();
+        }
+
         public static string LogWrite(string message, int index)
         {
 
@@ -78,6 +92,5 @@ namespace AutoRemoveFile
             }
             return temp+ "\n";
         }
-
     }
 }

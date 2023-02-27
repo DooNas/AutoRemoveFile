@@ -88,6 +88,8 @@ namespace AutoRemoveFile
         private void bt_Check_Click(object sender, EventArgs e) //Move to CheckList<Treeview>
         {
             rtb_log.AppendText(LogController.LogWrite(tb_Path.Text, 2));
+
+            if (tb_Path.Text == string.Empty) return;
             DirectoryInfo di = new DirectoryInfo(tb_Path.Text);
             if (di.Exists)
             {
@@ -164,6 +166,7 @@ namespace AutoRemoveFile
                 Properties.Settings.Default.DeleteListPath += path + "|";
                 listb_deletePath.Items.Add(path);
             }
+            DeleteDirList = Properties.Settings.Default.DeleteListPath.Split('|');
         }
         #endregion
 
@@ -231,5 +234,10 @@ namespace AutoRemoveFile
             GC.Collect();   //가비지 컬렉터
         }
         #endregion
+
+        private void bt_LoadLog_Click(object sender, EventArgs e)
+        {
+            LogController.LogRead(rtb_log);
+        }
     }
 }
