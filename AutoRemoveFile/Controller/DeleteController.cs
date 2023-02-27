@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
+using System.Xml.Linq;
 
 namespace AutoRemoveFile
 {
     internal class DeleteController
     {
-        private static List<string> folderDir;
-
         private static ushort Interver = 3600;
+        private static List<string> folderDir;
         private static ushort DeleteHour { get; set; }
         private static ushort InterverHour { get; set; }
 
@@ -41,68 +42,93 @@ namespace AutoRemoveFile
                 foreach (string path in folderDir)
                 {
                     LogController.LogWrite(path, 2); //Connecting..logMake
-                    DirectoryInfo di = new DirectoryInfo(path);
+                    DirectoryInfo di = new DirectoryInfo(path); //절대경로
                     LogController.LogWrite("", 3);//Connected logMake
 
-                    if (di.Exists)
+                    if (di.Exists)  //절대 경로 유무 확인
                     {
-                        DirectoryInfo[] dirInfo = di.GetDirectories();
+                        DirectoryInfo[] dirInfo = di.GetDirectories();  //절대경로의 하위 디렉토리들
                         string lData = DateTime.Now.AddHours(-DeleteHour).ToString("yyyy-MM-dd hh:mm:ss");
 
                         if (dirInfo.Length > 0)//하위 디렉토리 O
                         {
-                            foreach (DirectoryInfo dir in dirInfo.Reverse())
+                            foreach (DirectoryInfo dir in dirInfo.Reverse())//하위 디렉토리들(내림차순)
                             {
-                                if (lData.CompareTo(di.LastWriteTime.ToString("yyyy-MM-dd hh:mm:ss")) > 0)
-                                {
-                                    try
-                                    {
-                                        LogController.LogWrite(dir.FullName, 4);
-                                        dir.Delete(true);
-
-                                    }
-                                    catch (Exception ex) { LogController.LogWrite(ex.Message, 4); }
-                                    GC.Collect();
-                                    Thread.Sleep(20);
-                                }
-                            }
-                        }
-                        else//하위 디렉토리 X
-                        {
-                            if (lData.CompareTo(di.LastWriteTime.ToString("yyyy-MM-dd hh:mm:ss")) > 0)
-                            {
-                                foreach(FileInfo file in di.GetFiles())
-                                {
-                                    try
-                                    {
-                                        if(lData.CompareTo(file.LastWriteTime.ToString("yyyy-MM-dd hh:mm:ss")) > 0)
-                                        {
-                                            LogController.LogWrite(file.FullName, 4);
-                                            File.Delete(file.FullName);
-                                        }
-
-                                    }
-                                    catch (Exception ex) { LogController.LogWrite(ex.Message, 4); }
-                                }
-                                GC.Collect();
+                                if (isFiles(dir.FullName)) WhenDeleteFile(dir, lData);
+                                else WhenDeleteDir(dir, lData);
                                 Thread.Sleep(20);
                             }
                         }
+                        else if(isFiles(di.FullName)) WhenDeleteFile(di, lData);
                         
                     }
                     else { LogController.LogWrite("Specified file doesn't exist", 0); }
                     GC.Collect();
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-            GC.Collect();
+            catch (Exception ex) { LogController.LogWrite(ex.Message, 4); }
+            LogController.LogWrite(InterverHour.ToString(), 5);
             CheckTimer.Change(
                 TimeSpan.FromSeconds(InterverHour), 
                 TimeSpan.FromSeconds(InterverHour));
-            LogController.LogWrite(InterverHour.ToString(), 5);
+            GC.Collect();
+
+        }
+        /// <summary>
+        /// 디렉토리내 파일 유무 확인
+        /// </summary>
+        /// <param name="dir">상위경로</param>
+        /// <returns></returns>
+        private static bool isFiles(string dir)
+        {
+            string[] Directories = Directory.GetDirectories(dir);
+            {
+                string[] Files = Directory.GetFiles(dir);
+                if (Files.Length != 0) return true;
+
+                //재귀
+                foreach (string DirNode in Directories) isFiles(DirNode);
+            }
+            return false;
+        }
+        /// <summary>
+        /// 경과 시간에 따라 상위디렉토리 기준 하위 파일 삭제
+        /// </summary>
+        /// <param name="dir">절대경로</param>
+        /// <param name="lData">삭제 기준 날짜</param>
+        private static void WhenDeleteFile(DirectoryInfo dir, string lData)
+        {
+            foreach (FileInfo file in dir.GetFiles())
+            {
+                if (lData.CompareTo(file.CreationTime.ToString("yyyy-MM-dd hh:mm:ss")) > 0)
+                {
+                    try
+                    {
+                        LogController.LogWrite(file.FullName, 4);
+                        File.Delete(file.FullName);//해당 파일 삭제
+
+                    }
+                    catch (Exception ex) { LogController.LogWrite(ex.Message, 4); }
+                }
+            }
+        }
+        /// <summary>
+        /// 경과 시간에 따라 상위디렉토리 기준 하위 디렉토리 삭제
+        /// </summary>
+        /// <param name="dir"></param>
+        /// <param name="lData"></param>
+        private static void WhenDeleteDir(DirectoryInfo dir, string lData)
+        {
+            if (lData.CompareTo(dir.LastWriteTime.ToString("yyyy-MM-dd hh:mm:ss")) > 0)
+            {
+                try
+                {
+                    LogController.LogWrite(dir.FullName, 4);
+                    Directory.Delete(dir.FullName);//해당 경로 삭제
+
+                }
+                catch (Exception ex) { LogController.LogWrite(ex.Message, 4); }
+            }
         }
     }
 }
