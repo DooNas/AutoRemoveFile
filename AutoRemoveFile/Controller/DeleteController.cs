@@ -43,6 +43,7 @@ namespace AutoRemoveFile
                     LogController.LogWrite(path, 2); //Connecting..logMake
                     DirectoryInfo di = new DirectoryInfo(path);
                     LogController.LogWrite("", 3);//Connected logMake
+
                     if (di.Exists)
                     {
                         DirectoryInfo[] dirInfo = di.GetDirectories();
@@ -52,7 +53,7 @@ namespace AutoRemoveFile
                         {
                             foreach (DirectoryInfo dir in dirInfo.Reverse())
                             {
-                                if (lData.CompareTo(dir.LastWriteTime.ToString("yyyy-MM-dd hh:mm:ss")) > 0)
+                                if (lData.CompareTo(di.LastWriteTime.ToString("yyyy-MM-dd hh:mm:ss")) > 0)
                                 {
                                     try
                                     {
@@ -70,13 +71,19 @@ namespace AutoRemoveFile
                         {
                             if (lData.CompareTo(di.LastWriteTime.ToString("yyyy-MM-dd hh:mm:ss")) > 0)
                             {
-                                try
+                                foreach(FileInfo file in di.GetFiles())
                                 {
-                                    LogController.LogWrite(di.FullName, 4);
-                                    di.Delete(true);
+                                    try
+                                    {
+                                        if(lData.CompareTo(file.LastWriteTime.ToString("yyyy-MM-dd hh:mm:ss")) > 0)
+                                        {
+                                            LogController.LogWrite(file.FullName, 4);
+                                            File.Delete(file.FullName);
+                                        }
 
+                                    }
+                                    catch (Exception ex) { LogController.LogWrite(ex.Message, 4); }
                                 }
-                                catch (Exception ex) { LogController.LogWrite(ex.Message, 4); }
                                 GC.Collect();
                                 Thread.Sleep(20);
                             }

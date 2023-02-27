@@ -223,7 +223,8 @@ namespace AutoRemoveFile
             Properties.Settings.Default.Interval_h = int.Parse(tb_Time.Text);
 
             //삭제 리스트
-            foreach (string path in DeleteDirList) Properties.Settings.Default.DeleteListPath += path + "|";
+            Properties.Settings.Default.DeleteListPath = string.Empty;//초기화
+            foreach (string path in DeleteDirList) Properties.Settings.Default.DeleteListPath += path + "|"; 
 
             Properties.Settings.Default.Save();
             MessageBox.Show("Save!!"); 
