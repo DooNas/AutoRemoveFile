@@ -77,7 +77,7 @@ namespace AutoRemoveFile
         #endregion
 
         #region 원하는 상위 디렉토리 기반으로 TreeView 구현
-        private void tb_Path_Click(object sender, EventArgs e) //Find Main Path
+        private void Tb_Path_Click(object sender, EventArgs e) //Find Main Path
         {
             FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
             folderBrowser.ShowDialog();
@@ -85,21 +85,14 @@ namespace AutoRemoveFile
             Properties.Settings.Default.DirPath = tb_Path.Text; //로컬 설정화
             GC.Collect();   //가비지 컬렉터
         }
-        private void bt_Check_Click(object sender, EventArgs e) //Move to CheckList<Treeview>
+        private void Bt_Check_Click(object sender, EventArgs e) //Move to CheckList<Treeview>
         {
             rtb_log.AppendText(LogController.LogWrite(tb_Path.Text, 2));
 
-            if (tb_Path.Text == string.Empty) return;
-            DirectoryInfo di = new DirectoryInfo(tb_Path.Text);
-            if (di.Exists)
-            {
-                ListDictionary(Tree_Directory, tb_Path.Text);
-                rtb_log.AppendText(LogController.LogWrite("", 3));
-            }
-            else MessageBox.Show("Try again");
+            if (MakeTreeView(tb_Path.Text)) MessageBox.Show("Try again");
             GC.Collect();   //가비지 컬렉터
         }
-        private void tvdir_AfterCheck(object sender, TreeViewEventArgs e) //Check with children Nodes
+        private void Tvdir_AfterCheck(object sender, TreeViewEventArgs e) //Check with children Nodes
         {
             var node = e.Node;
             var children = node.Nodes;
@@ -107,6 +100,18 @@ namespace AutoRemoveFile
         }
         
         ////For Make TreeView////
+        private bool MakeTreeView(string path)
+        {
+            if (path == string.Empty) return false;
+            DirectoryInfo di = new DirectoryInfo(path);
+            if (di.Exists)
+            {
+                ListDictionary(Tree_Directory, tb_Path.Text);
+                rtb_log.AppendText(LogController.LogWrite("", 3));
+                return true;
+            }
+            else return false;
+        }
         private void ListDictionary(System.Windows.Forms.TreeView tree_Directory, string text)
         {
             tree_Directory.Nodes.Clear();//리셋
@@ -132,7 +137,7 @@ namespace AutoRemoveFile
 
         #region TreeView에서 선택한 경로를 Delete List로 연결
         private List<TreeNode> checkedNodes = new List<TreeNode>(); //삭제를 담당할 경로
-        private void bt_Path_Click(object sender, EventArgs e)
+        private void Bt_Path_Click(object sender, EventArgs e)
         {
             checkedNodes.Clear();//초기화
             Properties.Settings.Default.DeleteListPath = string.Empty;
@@ -170,7 +175,6 @@ namespace AutoRemoveFile
         }
         #endregion
 
-
         #region 윈도우 부팅시 자동시작
         private void AutoStart(object sender, EventArgs e)
         {
@@ -189,6 +193,8 @@ namespace AutoRemoveFile
             Application.Idle -= Application_Idle;//delete Event
             if (cb_AutoStart.Checked) this.Hide();
 
+            MakeTreeView(tb_Path.Text);
+
             if (Properties.Settings.Default.DeleteListPath != string.Empty)
             {
                 DeleteDirList = Properties.Settings.Default.DeleteListPath.Split('|').ToList();
@@ -206,7 +212,7 @@ namespace AutoRemoveFile
         #endregion
 
         #region log파일 저장경로 변경
-        private void bt_logPath_Click(object sender, EventArgs e)
+        private void Bt_logPath_Click(object sender, EventArgs e)
         {
             LogForm logForm = new LogForm();
             logForm.LogPath = Properties.Settings.Default.LogPath;
@@ -216,7 +222,7 @@ namespace AutoRemoveFile
         #endregion
 
         #region setting파일로 로컬피시에 설정 값 저장
-        private void btSave_Click(object sender, EventArgs e)
+        private void BtSave_Click(object sender, EventArgs e)
         {
             //시간
             Properties.Settings.Default.LastUpdate_h = int.Parse(tb_lastupdate.Text);
@@ -242,7 +248,7 @@ namespace AutoRemoveFile
         }
         #endregion
 
-        private void bt_LoadLog_Click(object sender, EventArgs e)
+        private void Bt_LoadLog_Click(object sender, EventArgs e)
         {
             LogController.LogRead(rtb_log);
         }

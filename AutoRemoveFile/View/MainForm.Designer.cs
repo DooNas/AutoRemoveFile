@@ -91,7 +91,7 @@
             this.bt_logPath.TabIndex = 6;
             this.bt_logPath.Text = "PATH";
             this.bt_logPath.UseVisualStyleBackColor = true;
-            this.bt_logPath.Click += new System.EventHandler(this.bt_logPath_Click);
+            this.bt_logPath.Click += new System.EventHandler(this.Bt_logPath_Click);
             // 
             // cb_AutoStart
             // 
@@ -149,7 +149,7 @@
             this.bt_Check.TabIndex = 5;
             this.bt_Check.Text = "OK";
             this.bt_Check.UseVisualStyleBackColor = true;
-            this.bt_Check.Click += new System.EventHandler(this.bt_Check_Click);
+            this.bt_Check.Click += new System.EventHandler(this.Bt_Check_Click);
             // 
             // lb_Time
             // 
@@ -201,7 +201,7 @@
             this.tb_Path.Name = "tb_Path";
             this.tb_Path.Size = new System.Drawing.Size(245, 25);
             this.tb_Path.TabIndex = 0;
-            this.tb_Path.Click += new System.EventHandler(this.tb_Path_Click);
+            this.tb_Path.Click += new System.EventHandler(this.Tb_Path_Click);
             // 
             // panel3
             // 
@@ -226,7 +226,7 @@
             this.bt_SaveSetting.TabIndex = 8;
             this.bt_SaveSetting.Text = "SAVE";
             this.bt_SaveSetting.UseVisualStyleBackColor = true;
-            this.bt_SaveSetting.Click += new System.EventHandler(this.btSave_Click);
+            this.bt_SaveSetting.Click += new System.EventHandler(this.BtSave_Click);
             // 
             // listb_deletePath
             // 
@@ -271,7 +271,7 @@
             this.bt_setpath.TabIndex = 3;
             this.bt_setpath.Text = "SETTING";
             this.bt_setpath.UseVisualStyleBackColor = true;
-            this.bt_setpath.Click += new System.EventHandler(this.bt_Path_Click);
+            this.bt_setpath.Click += new System.EventHandler(this.Bt_Path_Click);
             // 
             // lb_Delete
             // 
@@ -313,7 +313,7 @@
             this.Tree_Directory.Name = "Tree_Directory";
             this.Tree_Directory.Size = new System.Drawing.Size(268, 100);
             this.Tree_Directory.TabIndex = 0;
-            this.Tree_Directory.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.tvdir_AfterCheck);
+            this.Tree_Directory.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.Tvdir_AfterCheck);
             // 
             // openFileDialog
             // 
@@ -362,7 +362,7 @@
             this.bt_LoadLog.TabIndex = 9;
             this.bt_LoadLog.Text = "Load";
             this.bt_LoadLog.UseVisualStyleBackColor = true;
-            this.bt_LoadLog.Click += new System.EventHandler(this.bt_LoadLog_Click);
+            this.bt_LoadLog.Click += new System.EventHandler(this.Bt_LoadLog_Click);
             // 
             // MainForm
             // 
