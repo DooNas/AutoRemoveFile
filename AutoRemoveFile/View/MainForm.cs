@@ -20,25 +20,23 @@ namespace AutoRemoveFile
             TrayIconAction();//트레이 아이콘
         }
 
-        LogController logController = new LogController();//로그생성
         StartController autoStart = new StartController();//자동실행
         DeleteController dtcontroller = new DeleteController();//폴더삭제
-        String[] DeleteDirList; //삭제폴더 리스트
+        private String[] DeleteDirList { get; set; } //삭제폴더 리스트
 
         private void Main_Load(object sender, EventArgs e)
         {
             //트레이 아이콘
-            tb_Path.Text = Properties.Settings.Default.DirPath;
             Tray_Icon.ContextMenuStrip = Context_TaryIcon;
 
             //자동 시작
             if (autoStart.GetKey.GetValue("AutoRemoveFile") == null) cb_AutoStart.Checked = false;
             else cb_AutoStart.Checked = true;
 
-            //시간
+            //setting.setting파일 호출
             tb_lastupdate.Text = Properties.Settings.Default.LastUpdate_h.ToString();
             tb_Time.Text = Properties.Settings.Default.Interval_h.ToString();
-
+            tb_Path.Text = Properties.Settings.Default.DirPath;
 
             GC.Collect();   //가비지 컬렉터
         }
@@ -74,7 +72,7 @@ namespace AutoRemoveFile
         private void Sm_exit_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Are you Sure?");
-            Application.ExitThread();
+            Application.ExitThread();   //완전 종료
         }
         #endregion
 
@@ -89,12 +87,12 @@ namespace AutoRemoveFile
         }
         private void bt_Check_Click(object sender, EventArgs e) //Move to CheckList<Treeview>
         {
-            rtb_log.AppendText(logController.LogWrite(tb_Path.Text, 2));
+            rtb_log.AppendText(LogController.LogWrite(tb_Path.Text, 2));
             DirectoryInfo di = new DirectoryInfo(tb_Path.Text);
             if (di.Exists)
             {
                 ListDictionary(Tree_Directory, tb_Path.Text);
-                rtb_log.AppendText(logController.LogWrite("", 3));
+                rtb_log.AppendText(LogController.LogWrite("", 3));
             }
             else MessageBox.Show("Try again");
             GC.Collect();   //가비지 컬렉터
@@ -115,14 +113,14 @@ namespace AutoRemoveFile
                 var rootDirectoryInfo = new DirectoryInfo(text);    //최상위 디렉토리 값 저장
                 tree_Directory.Nodes.Add(CreatedirectoryNode(rootDirectoryInfo));
             }
-            catch(Exception ex){ rtb_log.AppendText(logController.LogWrite(ex.Message, 1)); }
+            catch(Exception ex){ rtb_log.AppendText(LogController.LogWrite(ex.Message, 1)); }
         }
         private TreeNode CreatedirectoryNode(DirectoryInfo directoryInfo)
         {
             var directoryNode = new TreeNode(directoryInfo.Name);
             foreach (var dir in directoryInfo.GetDirectories()) {
                 try { directoryNode.Nodes.Add(CreatedirectoryNode(dir)); }
-                catch (Exception ex) { rtb_log.AppendText(logController.LogWrite(ex.Message, 1)); }
+                catch (Exception ex) { rtb_log.AppendText(LogController.LogWrite(ex.Message, 1)); }
             }
             return directoryNode;
         }
