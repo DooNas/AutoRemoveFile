@@ -35,13 +35,15 @@ namespace AutoRemoveFile
 
         public static string LogWrite(string message, int index)
         {
+            //경로지정이 안되어 있을 경우
+            if(Properties.Settings.Default.LogPath == string.Empty) LogDirPath = Environment.CurrentDirectory + @"\Log";
+            else LogDirPath = Properties.Settings.Default.LogPath + @"\Log";
 
-            LogDirPath = Properties.Settings.Default.LogPath + @"\Log"; //절대경로
             LogFilePath = LogDirPath + "\\Log_" + DateTime.Today.ToString("MMdd") + ".log"; //해당 경로의 파일명
-            string temp;
 
             DirectoryInfo di = new DirectoryInfo(LogDirPath);
             FileInfo fi = new FileInfo(LogFilePath);
+            string temp;
 
             try
             {
@@ -71,7 +73,7 @@ namespace AutoRemoveFile
             return string.Format(ChoiceList[index], DateTime.Now, message);
         }
 
-        public static string FileWriter(DirectoryInfo di, FileInfo fi, string temp) //
+        public static string FileWriter(DirectoryInfo di, FileInfo fi, string temp)
         {
             if (!di.Exists) Directory.CreateDirectory(LogDirPath);
             if (!fi.Exists)

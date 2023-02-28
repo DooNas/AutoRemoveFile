@@ -14,7 +14,7 @@ namespace AutoRemoveFile
     {
 
         private string LogF_logPath;
-        public string LogPath
+        public string sLogPath
         {
             get { return this.LogF_logPath; }
             set { this.LogF_logPath = value;}//Main에서 전달 받은 값
@@ -25,18 +25,21 @@ namespace AutoRemoveFile
         }
         private void LogForm_Load(object sender, EventArgs e)
         {
-            Logtb_Path.Text = LogPath;
+            if (sLogPath == string.Empty) Logtb_Path.Text = Environment.CurrentDirectory;
+            else Logtb_Path.Text = sLogPath;
         }
         private void Logtb_Path_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
             folderBrowser.ShowDialog();
+
             Logtb_Path.Text = folderBrowser.SelectedPath;
             
         }
         private void Logbt_Check_Click(object sender, EventArgs e)
         {
-            LogPath = Logtb_Path.Text;
+            Properties.Settings.Default.LogPath = Logtb_Path.Text;
+            MessageBox.Show("Save!!");
         }
 
     }

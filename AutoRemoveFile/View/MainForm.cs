@@ -89,7 +89,7 @@ namespace AutoRemoveFile
         {
             rtb_log.AppendText(LogController.LogWrite(tb_Path.Text, 2));
 
-            if (MakeTreeView(tb_Path.Text)) MessageBox.Show("Try again");
+            if (!MakeTreeView(tb_Path.Text)) MessageBox.Show("Try again");
             GC.Collect();   //가비지 컬렉터
         }
         private void Tvdir_AfterCheck(object sender, TreeViewEventArgs e) //Check with children Nodes
@@ -211,13 +211,12 @@ namespace AutoRemoveFile
         }
         #endregion
 
-        #region log파일 저장경로 변경
+        #region log파일 저장경로 변경 
         private void Bt_logPath_Click(object sender, EventArgs e)
         {
             LogForm logForm = new LogForm();
-            logForm.LogPath = Properties.Settings.Default.LogPath;
+            logForm.sLogPath = Properties.Settings.Default.LogPath;
             logForm.ShowDialog();
-            Properties.Settings.Default.LogPath = logForm.LogPath;
         }
         #endregion
 

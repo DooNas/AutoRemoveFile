@@ -62,6 +62,7 @@
             this.Logtb_Path.Name = "Logtb_Path";
             this.Logtb_Path.Size = new System.Drawing.Size(355, 25);
             this.Logtb_Path.TabIndex = 6;
+            this.Logtb_Path.TabStop = false;
             this.Logtb_Path.Text = "D:\\DAT";
             this.Logtb_Path.Click += new System.EventHandler(this.Logtb_Path_Click);
             // 

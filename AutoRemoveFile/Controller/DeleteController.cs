@@ -41,12 +41,12 @@ namespace AutoRemoveFile
             {
                 foreach (string path in folderDir)
                 {
-                    LogController.LogWrite(path, 2); //Connecting..logMake
                     DirectoryInfo di = new DirectoryInfo(path); //절대경로
-                    LogController.LogWrite("", 3);//Connected logMake
-
                     if (di.Exists)  //절대 경로 유무 확인
                     {
+                        LogController.LogWrite(path, 2); //Connecting..logMake
+                        LogController.LogWrite("", 3);//Connected logMake
+
                         DirectoryInfo[] dirInfo = di.GetDirectories();  //절대경로의 하위 디렉토리들
                         string lData = DateTime.Now.AddHours(-DeleteHour).ToString("yyyy-MM-dd hh:mm:ss");
 
@@ -58,8 +58,9 @@ namespace AutoRemoveFile
                                 else WhenDeleteDir(dir, lData);
                                 Thread.Sleep(20);
                             }
+                            if (isFiles(di.FullName))WhenDeleteFile(di, lData);
                         }
-                        else if(isFiles(di.FullName)) WhenDeleteFile(di, lData);
+                        else if(isFiles(di.FullName))/*하위 디렉토리 X*/WhenDeleteFile(di, lData);
                         
                     }
                     else { LogController.LogWrite("Specified file doesn't exist", 0); }
