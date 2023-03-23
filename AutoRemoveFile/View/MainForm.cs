@@ -251,5 +251,6 @@ namespace AutoRemoveFile
         {
             LogController.LogRead(rtb_log);
         }
+
     }
 }

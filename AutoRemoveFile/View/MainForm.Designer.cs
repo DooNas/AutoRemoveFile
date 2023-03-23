@@ -31,10 +31,15 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.bt_LoadLog = new System.Windows.Forms.Button();
+            this.bt_SaveSetting = new System.Windows.Forms.Button();
             this.bt_logPath = new System.Windows.Forms.Button();
+            this.lb_hour = new System.Windows.Forms.Label();
             this.cb_AutoStart = new System.Windows.Forms.CheckBox();
+            this.tb_lastupdate = new System.Windows.Forms.TextBox();
             this.lb_log = new System.Windows.Forms.Label();
             this.rtb_log = new System.Windows.Forms.RichTextBox();
+            this.lb_lastupdate = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.bt_Check = new System.Windows.Forms.Button();
             this.lb_Time = new System.Windows.Forms.Label();
@@ -43,13 +48,9 @@
             this.lb_Path = new System.Windows.Forms.Label();
             this.tb_Path = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.bt_SaveSetting = new System.Windows.Forms.Button();
             this.listb_deletePath = new System.Windows.Forms.ListBox();
-            this.lb_hour = new System.Windows.Forms.Label();
-            this.tb_lastupdate = new System.Windows.Forms.TextBox();
             this.bt_setpath = new System.Windows.Forms.Button();
             this.lb_Delete = new System.Windows.Forms.Label();
-            this.lb_lastupdate = new System.Windows.Forms.Label();
             this.lb_Tree_Directory = new System.Windows.Forms.Label();
             this.Tree_Directory = new System.Windows.Forms.TreeView();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -58,7 +59,6 @@
             this.Context_TaryIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.sm_show = new System.Windows.Forms.ToolStripMenuItem();
             this.sm_exit = new System.Windows.Forms.ToolStripMenuItem();
-            this.bt_LoadLog = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -83,6 +83,30 @@
             this.panel1.Size = new System.Drawing.Size(660, 245);
             this.panel1.TabIndex = 0;
             // 
+            // bt_LoadLog
+            // 
+            this.bt_LoadLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bt_LoadLog.Location = new System.Drawing.Point(12, 213);
+            this.bt_LoadLog.Name = "bt_LoadLog";
+            this.bt_LoadLog.Size = new System.Drawing.Size(531, 25);
+            this.bt_LoadLog.TabIndex = 9;
+            this.bt_LoadLog.Text = "Load";
+            this.bt_LoadLog.UseVisualStyleBackColor = true;
+            this.bt_LoadLog.Click += new System.EventHandler(this.Bt_LoadLog_Click);
+            // 
+            // bt_SaveSetting
+            // 
+            this.bt_SaveSetting.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bt_SaveSetting.Location = new System.Drawing.Point(542, 3);
+            this.bt_SaveSetting.Name = "bt_SaveSetting";
+            this.bt_SaveSetting.Size = new System.Drawing.Size(106, 34);
+            this.bt_SaveSetting.TabIndex = 8;
+            this.bt_SaveSetting.Text = "SAVE";
+            this.bt_SaveSetting.UseVisualStyleBackColor = true;
+            this.bt_SaveSetting.Click += new System.EventHandler(this.BtSave_Click);
+            // 
             // bt_logPath
             // 
             this.bt_logPath.Location = new System.Drawing.Point(72, 9);
@@ -92,6 +116,17 @@
             this.bt_logPath.Text = "PATH";
             this.bt_logPath.UseVisualStyleBackColor = true;
             this.bt_logPath.Click += new System.EventHandler(this.Bt_logPath_Click);
+            // 
+            // lb_hour
+            // 
+            this.lb_hour.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lb_hour.AutoSize = true;
+            this.lb_hour.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lb_hour.Location = new System.Drawing.Point(489, 9);
+            this.lb_hour.Name = "lb_hour";
+            this.lb_hour.Size = new System.Drawing.Size(47, 20);
+            this.lb_hour.TabIndex = 6;
+            this.lb_hour.Text = "Hour";
             // 
             // cb_AutoStart
             // 
@@ -105,6 +140,16 @@
             this.cb_AutoStart.Text = "AutoStart :";
             this.cb_AutoStart.UseVisualStyleBackColor = true;
             this.cb_AutoStart.CheckedChanged += new System.EventHandler(this.AutoStart);
+            // 
+            // tb_lastupdate
+            // 
+            this.tb_lastupdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tb_lastupdate.Location = new System.Drawing.Point(451, 7);
+            this.tb_lastupdate.Name = "tb_lastupdate";
+            this.tb_lastupdate.Size = new System.Drawing.Size(36, 25);
+            this.tb_lastupdate.TabIndex = 6;
+            this.tb_lastupdate.Text = "48";
+            this.tb_lastupdate.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lb_log
             // 
@@ -125,6 +170,17 @@
             this.rtb_log.Size = new System.Drawing.Size(637, 167);
             this.rtb_log.TabIndex = 0;
             this.rtb_log.Text = "";
+            // 
+            // lb_lastupdate
+            // 
+            this.lb_lastupdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lb_lastupdate.AutoSize = true;
+            this.lb_lastupdate.Font = new System.Drawing.Font("굴림", 12F);
+            this.lb_lastupdate.Location = new System.Drawing.Point(300, 9);
+            this.lb_lastupdate.Name = "lb_lastupdate";
+            this.lb_lastupdate.Size = new System.Drawing.Size(159, 20);
+            this.lb_lastupdate.TabIndex = 6;
+            this.lb_lastupdate.Text = "LAST UPDATE : ";
             // 
             // panel2
             // 
@@ -216,18 +272,6 @@
             this.panel3.Size = new System.Drawing.Size(660, 197);
             this.panel3.TabIndex = 2;
             // 
-            // bt_SaveSetting
-            // 
-            this.bt_SaveSetting.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.bt_SaveSetting.Location = new System.Drawing.Point(542, 3);
-            this.bt_SaveSetting.Name = "bt_SaveSetting";
-            this.bt_SaveSetting.Size = new System.Drawing.Size(106, 34);
-            this.bt_SaveSetting.TabIndex = 8;
-            this.bt_SaveSetting.Text = "SAVE";
-            this.bt_SaveSetting.UseVisualStyleBackColor = true;
-            this.bt_SaveSetting.Click += new System.EventHandler(this.BtSave_Click);
-            // 
             // listb_deletePath
             // 
             this.listb_deletePath.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -239,27 +283,6 @@
             this.listb_deletePath.Name = "listb_deletePath";
             this.listb_deletePath.Size = new System.Drawing.Size(345, 154);
             this.listb_deletePath.TabIndex = 7;
-            // 
-            // lb_hour
-            // 
-            this.lb_hour.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lb_hour.AutoSize = true;
-            this.lb_hour.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lb_hour.Location = new System.Drawing.Point(489, 9);
-            this.lb_hour.Name = "lb_hour";
-            this.lb_hour.Size = new System.Drawing.Size(47, 20);
-            this.lb_hour.TabIndex = 6;
-            this.lb_hour.Text = "Hour";
-            // 
-            // tb_lastupdate
-            // 
-            this.tb_lastupdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.tb_lastupdate.Location = new System.Drawing.Point(451, 7);
-            this.tb_lastupdate.Name = "tb_lastupdate";
-            this.tb_lastupdate.Size = new System.Drawing.Size(36, 25);
-            this.tb_lastupdate.TabIndex = 6;
-            this.tb_lastupdate.Text = "48";
-            this.tb_lastupdate.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // bt_setpath
             // 
@@ -282,17 +305,6 @@
             this.lb_Delete.Size = new System.Drawing.Size(101, 20);
             this.lb_Delete.TabIndex = 3;
             this.lb_Delete.Text = "Delete List";
-            // 
-            // lb_lastupdate
-            // 
-            this.lb_lastupdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lb_lastupdate.AutoSize = true;
-            this.lb_lastupdate.Font = new System.Drawing.Font("굴림", 12F);
-            this.lb_lastupdate.Location = new System.Drawing.Point(300, 9);
-            this.lb_lastupdate.Name = "lb_lastupdate";
-            this.lb_lastupdate.Size = new System.Drawing.Size(159, 20);
-            this.lb_lastupdate.TabIndex = 6;
-            this.lb_lastupdate.Text = "LAST UPDATE : ";
             // 
             // lb_Tree_Directory
             // 
@@ -351,18 +363,6 @@
             this.sm_exit.Name = "sm_exit";
             this.sm_exit.Size = new System.Drawing.Size(115, 24);
             this.sm_exit.Text = "Exit";
-            // 
-            // bt_LoadLog
-            // 
-            this.bt_LoadLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.bt_LoadLog.Location = new System.Drawing.Point(12, 213);
-            this.bt_LoadLog.Name = "bt_LoadLog";
-            this.bt_LoadLog.Size = new System.Drawing.Size(531, 25);
-            this.bt_LoadLog.TabIndex = 9;
-            this.bt_LoadLog.Text = "Load";
-            this.bt_LoadLog.UseVisualStyleBackColor = true;
-            this.bt_LoadLog.Click += new System.EventHandler(this.Bt_LoadLog_Click);
             // 
             // MainForm
             // 
