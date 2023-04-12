@@ -8,23 +8,15 @@ using System.Threading.Tasks;
 
 namespace DeleteFileController.Presenter
 {
-    internal class PreDelete
+    internal class PreLog
     {
         readonly interMain view;
-        readonly interDelete model;
+        readonly interLog model;
 
-        public PreDelete(in interMain view, interDelete model)
+        public PreLog(interMain view, interLog model)
         {
             this.view = view;
             this.model = model;
-        }
-
-        void Delete()
-        {
-            foreach(string path in view.DeleteDirList)
-            {
-                model.DeleteFolder(path, view.OldDayDelete);
-            }
         }
     }
 }

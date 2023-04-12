@@ -11,6 +11,9 @@ namespace DeleteFileController.View
     interface interMain
     {
         [DisallowNull]
+        string APPLICATION_NAME { get; }
+
+        [DisallowNull]
         string SuperPath { get; set; }
 
         [DisallowNull]
@@ -22,5 +25,7 @@ namespace DeleteFileController.View
         int IntervalHours { get; set; }
         int OldDayDelete { get; set; }
         bool AutoStart { get; set; }
+
+        TreeView tree_Directory { get; set; }
     }
 }

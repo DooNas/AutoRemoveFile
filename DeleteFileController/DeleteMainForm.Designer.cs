@@ -139,6 +139,7 @@
             cb_AutoStart.TabIndex = 3;
             cb_AutoStart.Text = "AutoStart :";
             cb_AutoStart.UseVisualStyleBackColor = true;
+            cb_AutoStart.CheckedChanged += cb_AutoStart_CheckedChanged;
             // 
             // tb_lastupdate
             // 

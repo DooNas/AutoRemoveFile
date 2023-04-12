@@ -1,10 +1,13 @@
-﻿using DeleteFileController.View;
+﻿using DeleteFileController.Model;
+using DeleteFileController.Presenter;
+using DeleteFileController.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,20 +17,39 @@ namespace DeleteFileController
 {
     public partial class DeleteMainForm : Form, interMain
     {
-        public string SuperPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string APPLICATION_NAME { get { return "DeleteFolderManager"; } }
+        public string SuperPath
+        {
+            get
+            {
+                try { if (File.Exists(Properties.Settings.Default.SuperPath)) return Properties.Settings.Default.SuperPath; }
+                catch (Exception ex) { MessageBox.Show(ex.Message, "Not Directory"); }
+                return string.Empty;
+            }
+            set => Properties.Settings.Default.SuperPath = value;
+        }
         public List<TreeNode> SuperPathChild { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public List<string> DeleteDirList { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public int IntervalHours { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public int OldDayDelete { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public bool AutoStart { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public TreeView tree_Directory { get => this.Tree_Directory; set => throw new NotImplementedException(); }
 
         public DeleteMainForm()
         {
             InitializeComponent();
             TrayIconAction();
+            this.Load += Main_Load;
 
         }
+        private PreAutoStart autoStart;
+        private void PresenterList()
+        {
+            //윈도우 부팅시
+            autoStart = new PreAutoStart(this, new AutoStartModel());
+            cb_AutoStart.Checked = autoStart.CheckAuto();
 
+        }
         #region 트레이 아이콘
         private void TrayIconAction() //Events
         {
@@ -63,5 +85,16 @@ namespace DeleteFileController
         }
 
         #endregion
+        private void Main_Load(object? sender, EventArgs e)
+        {
+            PresenterList(); //Presenter
+            Tray_Icon.ContextMenuStrip = Context_TaryIcon;   //트레이 아이콘
+        }
+
+        private void cb_AutoStart_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cb_AutoStart.Checked) autoStart.Start();
+            else autoStart.Stop();
+        }
     }
 }
