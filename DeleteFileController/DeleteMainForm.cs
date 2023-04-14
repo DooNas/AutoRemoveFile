@@ -28,12 +28,13 @@ namespace DeleteFileController
             }
             set => Properties.Settings.Default.SuperPath = value;
         }
-        public List<TreeNode> SuperPathChild { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public List<string> DeleteDirList { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<TreeNode> SuperPathChild { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public int IntervalHours { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public int OldDayDelete { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public bool AutoStart { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public TreeView tree_Directory { get => this.Tree_Directory; set => throw new NotImplementedException(); }
+        public TreeView tree_Directory { get => Tree_Directory; set => Tree_Directory = value; }
+        public RichTextBox RichTextBox { get => this.rtb_log; }
 
         public DeleteMainForm()
         {
@@ -43,12 +44,20 @@ namespace DeleteFileController
 
         }
         private PreAutoStart autoStart;
+        private PreTreeList TreeList;
         private void PresenterList()
         {
-            //윈도우 부팅시
+            //Auto
             autoStart = new PreAutoStart(this, new AutoStartModel());
             cb_AutoStart.Checked = autoStart.CheckAuto();
 
+            //TreeView
+            TreeList = new PreTreeList (this, new TreeListModel ());
+            tb_Path.Text = SuperPath;
+
+            //Delete
+
+            //Log
         }
         #region 트레이 아이콘
         private void TrayIconAction() //Events
@@ -91,10 +100,42 @@ namespace DeleteFileController
             Tray_Icon.ContextMenuStrip = Context_TaryIcon;   //트레이 아이콘
         }
 
+        private void log_Path_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
+            folderBrowser.ShowDialog();
+            tb_Path.Text = folderBrowser.SelectedPath;
+            Properties.Settings.Default.SuperPath = tb_Path.Text; //로컬 설정화
+            GC.Collect();   //가비지 컬렉터
+        }
+
+        private void bt_logPath_Click(object sender, EventArgs e)
+        {
+            LogPathForm logForm = new LogPathForm();
+            logForm.sLogPath = Properties.Settings.Default.LogPath;
+            logForm.ShowDialog();
+        }
+
         private void cb_AutoStart_CheckedChanged(object sender, EventArgs e)
         {
             if (cb_AutoStart.Checked) autoStart.Start();
             else autoStart.Stop();
+        }
+
+        private void tb_Path_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
+            folderBrowser.ShowDialog();
+            tb_Path.Text = folderBrowser.SelectedPath;
+            Properties.Settings.Default.SuperPath = tb_Path.Text; //로컬 설정화
+            GC.Collect();   //가비지 컬렉터
+        }
+        private void Bt_Check_Click(object sender, EventArgs e) //Move to CheckList<Treeview>
+        {
+            rtb_log.AppendText($"[{DateTime.Now}] Get Directory info... PATH:{tb_Path.Text}");
+
+            /*if (!MakeTreeView(tb_Path.Text)) MessageBox.Show("Try again");
+            GC.Collect();   //가비지 컬렉터*/
         }
     }
 }

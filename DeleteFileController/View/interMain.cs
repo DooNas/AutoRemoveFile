@@ -27,5 +27,7 @@ namespace DeleteFileController.View
         bool AutoStart { get; set; }
 
         TreeView tree_Directory { get; set; }
+
+        RichTextBox RichTextBox { get;}
     }
 }

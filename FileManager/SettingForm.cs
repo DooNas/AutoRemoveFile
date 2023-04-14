@@ -8,18 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AutoRemoveFile
+namespace DeleteFileController
 {
-    public partial class LogForm : Form
+    public partial class SettingForm : Form
     {
 
         private string LogF_logPath;
         public string sLogPath
         {
             get { return this.LogF_logPath; }
-            set { this.LogF_logPath = value;}//Main에서 전달 받은 값
+            set { this.LogF_logPath = value; }//Main에서 전달 받은 값
         }
-        public LogForm()
+        public SettingForm()
         {
             InitializeComponent();
         }
@@ -34,11 +34,10 @@ namespace AutoRemoveFile
             folderBrowser.ShowDialog();
 
             Logtb_Path.Text = folderBrowser.SelectedPath;
-            
         }
         private void Logbt_Check_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.LogPath = Logtb_Path.Text;
+            FileManager.Properties.Settings.Default.LogPath = Logtb_Path.Text;
             MessageBox.Show("Save!!");
         }
     }

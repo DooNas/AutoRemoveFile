@@ -115,6 +115,7 @@
             bt_logPath.Size = new System.Drawing.Size(32, 32);
             bt_logPath.TabIndex = 6;
             bt_logPath.UseVisualStyleBackColor = true;
+            bt_logPath.Click += bt_logPath_Click;
             // 
             // lb_hour
             // 
@@ -260,6 +261,7 @@
             tb_Path.Name = "tb_Path";
             tb_Path.Size = new System.Drawing.Size(327, 27);
             tb_Path.TabIndex = 0;
+            tb_Path.Click += tb_Path_Click;
             // 
             // panel3
             // 

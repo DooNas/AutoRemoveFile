@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\KernelDelete.cs" />
     <Compile Include="Controller\StartController.cs" />
     <Compile Include="Controller\DeleteController.cs" />
     <Compile Include="Controller\LogController.cs" />

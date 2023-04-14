@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DeleteFileController.Model.inter
 {
     interface interDelete
     {
-        public  Boolean IsEmptyFolder(String folder);
-        public Boolean DeleteFolder(string folder, int daysOld);
+        string folder { get; set; }
+        int daysOld {get; set; }
+        RichTextBox logtextbox { get; set; }
+
+        public Boolean IsEmptyFolder(string folder);
+        public Boolean DeleteFolder();
     }
 }

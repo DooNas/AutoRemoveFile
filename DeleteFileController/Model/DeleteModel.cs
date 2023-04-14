@@ -6,11 +6,16 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DeleteFileController.Model
 {
     internal class DeleteModel : interDelete
     {
+        public string folder { get; set; }
+        public int daysOld { get; set; }
+        public RichTextBox logtextbox { get; set; }
+        #region WinAPI
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         struct WIN32_FIND_DATAW
         {
@@ -38,52 +43,18 @@ namespace DeleteFileController.Model
         public static extern Boolean DeleteFileW(String lpFileName);    //  Deletes an existing file
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         private static extern Boolean RemoveDirectoryW(String lpPathName);   //  Deletes an existing empty directory
+        #endregion
 
-        public Boolean IsEmptyFolder(string folder)
-        {
-            Boolean res = true;
-
-            if (folder == null && folder.Length == 0)  throw new Exception(folder + "is invalid");
-
-            WIN32_FIND_DATAW findFileData;
-            String searchFiles = folder + @"\*.*";
-            IntPtr searchHandle = FindFirstFileW(searchFiles, out findFileData);
-
-            if (searchHandle == INVALID_HANDLE_VALUE)  throw new Exception("Cannot check folder " + folder);
-
-            do
-            {
-                if ((findFileData.dwFileAttributes & FileAttributes.Directory) == FileAttributes.Directory)
-                {   //  서브폴더가 있는 경우
-                    if (findFileData.cFileName != "." && findFileData.cFileName != "..")
-                    {
-                        res = false;
-                        break;
-                    }
-                }
-                else
-                {   //  서브폴더가 없는 경우
-                    res = false;
-                    break;
-                }
-            } while (FindNextFileW(searchHandle, out findFileData));
-            FindClose(searchHandle);
-
-            return res; 
-        }
-
-        public Boolean DeleteFolder(string folder, int daysOld)
+        public  Boolean DeleteFolder()
         {
             bool res = true;
 
-            // Keep non-empty folders to delete later (after we delete everything inside)
             Stack<string> nonEmptyFolders = new Stack<string>(); //지워야할 디렉토리 경로들
             string currentFolder = folder;  //임의로 정한 상위 경로
 
             do
             {
                 bool isEmpty = false;
-
                 try { isEmpty = IsEmptyFolder(currentFolder); }
                 catch (Exception ex)
                 {   // Something went wrong
@@ -103,17 +74,16 @@ namespace DeleteFileController.Model
                         {
                             // 상위 디렉토리를 기준으로 하위의 모든 디렉토리와 파일을 찾아서 제거시작
                             string foundPath = currentFolder + @"\" + findFileData.cFileName;
-
                             if ((findFileData.dwFileAttributes & FileAttributes.Directory) == FileAttributes.Directory)
                             {   // 서브폴더 있음
                                 if (findFileData.cFileName != "." && findFileData.cFileName != "..")
                                 {
                                     if (IsEmptyFolder(foundPath))
                                     {   // 서브폴더 안에 내용물이 없음
+                                        logtextbox.AppendText($"[{DateTime.Now}] [DEL] {foundPath}\n");
                                         if (!(res = RemoveDirectoryW(foundPath)))/* 삭제 진행 */
-                                        {
-                                            int error = Marshal.GetLastWin32Error();
-                                            break;
+                                        {   //삭제 실패 여부 체크
+                                            int error = Marshal.GetLastWin32Error(); break;
                                         }
                                     }
                                     else nonEmptyFolders.Push(foundPath); //서브폴더 안에 내용물이 있음
@@ -124,10 +94,10 @@ namespace DeleteFileController.Model
                                 DateTime createdDate = File.GetCreationTime(foundPath);
                                 if (DateTime.Now.Subtract(createdDate).TotalDays <= daysOld)/* daysOld의 값보다 더 지난 날짜일 경우 */
                                 {
+                                    logtextbox.AppendText($"[{DateTime.Now}] [DEL] {foundPath}\n");
                                     if (!(res = DeleteFileW(foundPath)))/* 삭제 진행 */
-                                    {
-                                        int error = Marshal.GetLastWin32Error();
-                                        break;
+                                    {   //삭제 실패 여부 체크
+                                        int error = Marshal.GetLastWin32Error(); break;
                                     }
                                 }
                             }
@@ -135,14 +105,7 @@ namespace DeleteFileController.Model
                         FindClose(searchHandle);
                     }
                 }
-                else
-                {   //디렉토리가 없을 경우
-                    if (!(res = RemoveDirectoryW(currentFolder)))
-                    {
-                        int error = Marshal.GetLastWin32Error();
-                        break;
-                    }
-                }
+
                 //디렉토리 리스트 체크
                 if (nonEmptyFolders.Count > 0) currentFolder = nonEmptyFolders.Pop(); 
                 else  currentFolder = null;
@@ -150,5 +113,37 @@ namespace DeleteFileController.Model
             } while (currentFolder != null && res);
             return res;
         }
+        public Boolean IsEmptyFolder(string folder)
+        {
+            Boolean res = true;
+
+            if (folder == null && folder.Length == 0) throw new Exception(folder + "is invalid");
+
+            WIN32_FIND_DATAW findFileData;
+            String searchFiles = folder + @"\*.*";
+            IntPtr searchHandle = FindFirstFileW(searchFiles, out findFileData);
+
+            if (searchHandle == INVALID_HANDLE_VALUE) throw new Exception("Cannot check folder " + folder);
+
+            do
+            {
+                if ((findFileData.dwFileAttributes & FileAttributes.Directory) == FileAttributes.Directory)
+                {   //  서브폴더가 있는 경우
+                    if (findFileData.cFileName != "." && findFileData.cFileName != "..")
+                    {
+                        res = false;
+                        break;
+                    }
+                }
+                else
+                {   //  서브폴더가 없는 경우
+                    res = false;
+                    break;
+                }
+            } while (FindNextFileW(searchHandle, out findFileData));
+            FindClose(searchHandle);
+
+            return res;
+        }
     }
- }
+}

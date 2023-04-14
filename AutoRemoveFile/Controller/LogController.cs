@@ -69,7 +69,6 @@ namespace AutoRemoveFile
                 "[{0}] Finish Delete Directories. Wait for next callback! ({1} seconds interval)",    //[5] 삭제 완료 후 재시작 예정일
                 "[{0}] Delete Directories that are out of storage "                                   //[6] 삭제 완료
             };
-
             return string.Format(ChoiceList[index], DateTime.Now, message);
         }
 

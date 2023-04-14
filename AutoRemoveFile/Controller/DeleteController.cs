@@ -1,9 +1,11 @@
-﻿using System;
+﻿using AutoRemoveFile.Controller;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Windows.Forms;
 using System.Xml.Linq;
 
 namespace AutoRemoveFile
@@ -19,7 +21,7 @@ namespace AutoRemoveFile
         {
             folderDir = nfolderDir;
             DeleteHour = (ushort) nDeleteHour;  //0 ~  65,535 (2 byte)
-            InterverHour = (ushort) (nInterverHour* Interver);  //0 ~ 18 (2 byte)
+            InterverHour = (ushort) (nInterverHour* 1);  //0 ~ 18 (2 byte)
         }
 
         private static System.Threading.Timer CheckTimer;
@@ -36,12 +38,13 @@ namespace AutoRemoveFile
         {
             CheckTimer.Change(Timeout.Infinite, Timeout.Infinite);  //기존 쓰레드 종료
             LogController.LogWrite("", 0);
-
             try
             {
                 foreach (string path in folderDir)
                 {
-                    DirectoryInfo di = new DirectoryInfo(path); //절대경로
+                    LogController.LogWrite(path, 2); //Connecting..logMake
+                    LogController.LogWrite("", 3);//Connected logMake
+                    /*DirectoryInfo di = new DirectoryInfo(path); //절대경로
                     if (di.Exists)  //절대 경로 유무 확인
                     {
                         LogController.LogWrite(path, 2); //Connecting..logMake
@@ -60,11 +63,13 @@ namespace AutoRemoveFile
                             }
                             if (isFiles(di.FullName))WhenDeleteFile(di, lData);
                         }
-                        else if(isFiles(di.FullName))/*하위 디렉토리 X*/WhenDeleteFile(di, lData);
-                        
+                        else if(isFiles(di.FullName))*//*하위 디렉토리 X*//*WhenDeleteFile(di, lData);
                     }
                     else { LogController.LogWrite("Specified file doesn't exist", 0); }
-                    GC.Collect();
+                    GC.Collect();*/
+                    KernelDelete fileDelete = new KernelDelete();
+                    try { Boolean b = fileDelete.DeleteFolder(path, DeleteHour/24); }
+                    catch (Exception ex) { MessageBox.Show(ex.Message); }
                 }
             }
             catch (Exception ex) { LogController.LogWrite(ex.Message, 4); }
@@ -74,7 +79,7 @@ namespace AutoRemoveFile
                 TimeSpan.FromSeconds(InterverHour));
             GC.Collect();
 
-        }
+        } 
         /// <summary>
         /// 디렉토리내 파일 유무 확인
         /// </summary>

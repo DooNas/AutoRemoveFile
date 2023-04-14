@@ -3,6 +3,9 @@
   <Profiles />
   <Settings>
     <Setting Name="SuperPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\DAT</Value>
+    </Setting>
+    <Setting Name="LogPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DeleteFileController.Properties {
+namespace FileManager.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -25,7 +25,7 @@ namespace DeleteFileController.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\DAT")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\")]
         public string SuperPath {
             get {
                 return ((string)(this["SuperPath"]));
@@ -44,6 +44,42 @@ namespace DeleteFileController.Properties {
             }
             set {
                 this["LogPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DeletePath {
+            get {
+                return ((string)(this["DeletePath"]));
+            }
+            set {
+                this["DeletePath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Interval_Hour {
+            get {
+                return ((int)(this["Interval_Hour"]));
+            }
+            set {
+                this["Interval_Hour"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Standard_Day {
+            get {
+                return ((int)(this["Standard_Day"]));
+            }
+            set {
+                this["Standard_Day"] = value;
             }
         }
     }
