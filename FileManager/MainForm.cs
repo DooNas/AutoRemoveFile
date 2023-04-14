@@ -21,7 +21,7 @@ namespace FileManager
         private void bt_Setting_Click(object sender, EventArgs e)
         {
             SettingForm Settings = new SettingForm();
-            Settings.sLogPath = Properties.Settings.Default.LogPath;
+            Settings.Size = new Size(610, 195);
             Settings.ShowDialog();
         }
     }

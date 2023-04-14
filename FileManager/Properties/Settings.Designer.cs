@@ -25,7 +25,7 @@ namespace FileManager.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\DAT")]
         public string SuperPath {
             get {
                 return ((string)(this["SuperPath"]));
