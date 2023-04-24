@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             TopPanel = new System.Windows.Forms.Panel();
             lb_title = new System.Windows.Forms.Label();
@@ -37,12 +38,18 @@
             tP_LOG = new System.Windows.Forms.TabPage();
             tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             bt_restart = new System.Windows.Forms.Button();
+            richTextBox1 = new System.Windows.Forms.RichTextBox();
             tP_TreeView = new System.Windows.Forms.TabPage();
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             tv_superPath = new System.Windows.Forms.TreeView();
-            bt_SetDeleteList = new System.Windows.Forms.Button();
             ltb_deletList = new System.Windows.Forms.ListBox();
             bt_SavedeleteList = new System.Windows.Forms.Button();
+            ofDialog = new System.Windows.Forms.OpenFileDialog();
+            fsWatcher = new System.IO.FileSystemWatcher();
+            nfIcon = new System.Windows.Forms.NotifyIcon(components);
+            ctMenuStrp = new System.Windows.Forms.ContextMenuStrip(components);
+            sm_show = new System.Windows.Forms.ToolStripMenuItem();
+            sm_exit = new System.Windows.Forms.ToolStripMenuItem();
             TopPanel.SuspendLayout();
             Mainpanel.SuspendLayout();
             tbc_Main.SuspendLayout();
@@ -50,6 +57,8 @@
             tableLayoutPanel2.SuspendLayout();
             tP_TreeView.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)fsWatcher).BeginInit();
+            ctMenuStrp.SuspendLayout();
             SuspendLayout();
             // 
             // TopPanel
@@ -127,6 +136,7 @@
             tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 79.051384F));
             tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.948616F));
             tableLayoutPanel2.Controls.Add(bt_restart, 1, 0);
+            tableLayoutPanel2.Controls.Add(richTextBox1, 0, 0);
             tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -144,6 +154,16 @@
             bt_restart.TabIndex = 1;
             bt_restart.Text = "RESTART";
             bt_restart.UseVisualStyleBackColor = true;
+            bt_restart.Click += bt_restart_Click;
+            // 
+            // richTextBox1
+            // 
+            richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            richTextBox1.Location = new System.Drawing.Point(3, 3);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.Size = new System.Drawing.Size(563, 291);
+            richTextBox1.TabIndex = 2;
+            richTextBox1.Text = "";
             // 
             // tP_TreeView
             // 
@@ -160,13 +180,11 @@
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            tableLayoutPanel1.ColumnCount = 4;
+            tableLayoutPanel1.ColumnCount = 3;
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.3333321F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.2222214F));
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.3333321F));
-            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.1111107F));
             tableLayoutPanel1.Controls.Add(tv_superPath, 0, 0);
-            tableLayoutPanel1.Controls.Add(bt_SetDeleteList, 3, 0);
             tableLayoutPanel1.Controls.Add(ltb_deletList, 2, 0);
             tableLayoutPanel1.Controls.Add(bt_SavedeleteList, 1, 0);
             tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -182,27 +200,17 @@
             tv_superPath.Dock = System.Windows.Forms.DockStyle.Fill;
             tv_superPath.Location = new System.Drawing.Point(3, 3);
             tv_superPath.Name = "tv_superPath";
-            tv_superPath.Size = new System.Drawing.Size(233, 287);
+            tv_superPath.Size = new System.Drawing.Size(262, 287);
             tv_superPath.TabIndex = 0;
-            // 
-            // bt_SetDeleteList
-            // 
-            bt_SetDeleteList.Dock = System.Windows.Forms.DockStyle.Fill;
-            bt_SetDeleteList.Location = new System.Drawing.Point(640, 3);
-            bt_SetDeleteList.Name = "bt_SetDeleteList";
-            bt_SetDeleteList.Size = new System.Drawing.Size(74, 287);
-            bt_SetDeleteList.TabIndex = 2;
-            bt_SetDeleteList.Text = "SAVE";
-            bt_SetDeleteList.UseVisualStyleBackColor = true;
             // 
             // ltb_deletList
             // 
             ltb_deletList.Dock = System.Windows.Forms.DockStyle.Fill;
             ltb_deletList.FormattingEnabled = true;
             ltb_deletList.ItemHeight = 20;
-            ltb_deletList.Location = new System.Drawing.Point(401, 3);
+            ltb_deletList.Location = new System.Drawing.Point(450, 3);
             ltb_deletList.Name = "ltb_deletList";
-            ltb_deletList.Size = new System.Drawing.Size(233, 287);
+            ltb_deletList.Size = new System.Drawing.Size(264, 287);
             ltb_deletList.TabIndex = 3;
             // 
             // bt_SavedeleteList
@@ -210,11 +218,49 @@
             bt_SavedeleteList.BackColor = System.Drawing.Color.Transparent;
             bt_SavedeleteList.Dock = System.Windows.Forms.DockStyle.Fill;
             bt_SavedeleteList.Image = Properties.Resources.arrow_next_right;
-            bt_SavedeleteList.Location = new System.Drawing.Point(242, 3);
+            bt_SavedeleteList.Location = new System.Drawing.Point(271, 3);
             bt_SavedeleteList.Name = "bt_SavedeleteList";
-            bt_SavedeleteList.Size = new System.Drawing.Size(153, 287);
+            bt_SavedeleteList.Size = new System.Drawing.Size(173, 287);
             bt_SavedeleteList.TabIndex = 1;
             bt_SavedeleteList.UseVisualStyleBackColor = false;
+            bt_SavedeleteList.Click += bt_SavedeleteList_Click;
+            // 
+            // ofDialog
+            // 
+            ofDialog.FileName = "openFileDialog1";
+            // 
+            // fsWatcher
+            // 
+            fsWatcher.EnableRaisingEvents = true;
+            fsWatcher.SynchronizingObject = this;
+            // 
+            // nfIcon
+            // 
+            nfIcon.Icon = (System.Drawing.Icon)resources.GetObject("nfIcon.Icon");
+            nfIcon.Text = "FileManager";
+            nfIcon.Visible = true;
+            nfIcon.MouseDoubleClick += Tray_Icon_MouseDoubleClick;
+            // 
+            // ctMenuStrp
+            // 
+            ctMenuStrp.ImageScalingSize = new System.Drawing.Size(20, 20);
+            ctMenuStrp.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { sm_show, sm_exit });
+            ctMenuStrp.Name = "ctMenuStrp";
+            ctMenuStrp.Size = new System.Drawing.Size(124, 52);
+            // 
+            // sm_show
+            // 
+            sm_show.Name = "sm_show";
+            sm_show.Size = new System.Drawing.Size(123, 24);
+            sm_show.Text = "SHOW";
+            sm_show.Click += Sm_show_Click;
+            // 
+            // sm_exit
+            // 
+            sm_exit.Name = "sm_exit";
+            sm_exit.Size = new System.Drawing.Size(123, 24);
+            sm_exit.Text = "EXIT";
+            sm_exit.Click += Sm_exit_Click;
             // 
             // MainForm
             // 
@@ -234,6 +280,8 @@
             tableLayoutPanel2.ResumeLayout(false);
             tP_TreeView.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)fsWatcher).EndInit();
+            ctMenuStrp.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -249,9 +297,15 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TreeView tv_superPath;
         private System.Windows.Forms.Button bt_SavedeleteList;
-        private System.Windows.Forms.Button bt_SetDeleteList;
         private System.Windows.Forms.ListBox ltb_deletList;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Button bt_restart;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.OpenFileDialog ofDialog;
+        private System.IO.FileSystemWatcher fsWatcher;
+        private System.Windows.Forms.NotifyIcon nfIcon;
+        private System.Windows.Forms.ContextMenuStrip ctMenuStrp;
+        private System.Windows.Forms.ToolStripMenuItem sm_show;
+        private System.Windows.Forms.ToolStripMenuItem sm_exit;
     }
 }

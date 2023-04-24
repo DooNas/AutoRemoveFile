@@ -10,6 +10,7 @@ namespace AutoRemoveFile.Controller
 {
     class KernelDelete
     {
+        #region Kernel 호출
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         struct WIN32_FIND_DATAW
         {
@@ -44,10 +45,10 @@ namespace AutoRemoveFile.Controller
 
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         private static extern Boolean RemoveDirectoryW(String lpPathName);   //  Deletes an existing empty directory
+        #endregion
 
-
-        //  This method check to see if the given folder is empty or not.
-        public Boolean IsEmptyFolder(String folder)
+        int savecount = 0;
+        public Boolean IsEmptyFolder(String folder)/* 폴더 안에 파일유무 체크 */
         {
             Boolean res = true;
 
@@ -86,10 +87,8 @@ namespace AutoRemoveFile.Controller
 
             FindClose(searchHandle);
             return res;
-        }   //  public static Boolean IsEmptyFolder(String folder)
-
-        //  This method deletes the given folder
-        public Boolean DeleteFolder(String folder, int LastUpDate)
+        }   
+        public Boolean DeleteFolder(String folder, int LastUpHours)/* 절대경로를 기준으로 LastUpdate값을 넘긴 파일,폴더를 제거 */
         {
             Boolean res = true;
             //  keep non-empty folders to delete later (after we delete everything inside)
@@ -117,7 +116,7 @@ namespace AutoRemoveFile.Controller
                     if (searchHandle != INVALID_HANDLE_VALUE)
                     {
                         do
-                        {   //  for each folder, find all of its sub folders and files
+                        {   //nonEmptyFolder의 경로를 기반으로 각 폴더의 서브폴더와 파일을 찾는다.
                             String foundPath = currentFolder + @"\" + findFileData.cFileName;
                             if ((findFileData.dwFileAttributes & FileAttributes.Directory) == FileAttributes.Directory)
                             {
@@ -143,7 +142,7 @@ namespace AutoRemoveFile.Controller
                             else
                             {// 서브폴더 없음
                                 DateTime createdDate = File.GetCreationTime(foundPath);
-                                if (DateTime.Now.Subtract(createdDate).TotalDays >= LastUpDate)/* daysOld의 값보다 더 지난 날짜일 경우 */
+                                if (DateTime.Now.Subtract(createdDate).TotalHours >= LastUpHours)/* daysOld의 값보다 더 지난 날짜일 경우 */
                                 {
                                     LogController.LogWrite(foundPath, 4);
                                     if (!(res = DeleteFileW(foundPath)))/* 삭제 진행 */
@@ -151,13 +150,14 @@ namespace AutoRemoveFile.Controller
                                         int error = Marshal.GetLastWin32Error(); break;
                                     }
                                 }
+                                else savecount++;
                             }
 
-                            if (nonEmptyFolder.Count > 0) currentFolder = nonEmptyFolder.Pop();
+                            if (nonEmptyFolder.Count != savecount) currentFolder = nonEmptyFolder.Pop();
                             else currentFolder = null;
 
                             // Check if the condition is still met
-                            if (currentFolder == null || DateTime.Now.Subtract(File.GetCreationTime(foundPath)).TotalDays < LastUpDate) break;
+                            if (currentFolder == null || DateTime.Now.Subtract(File.GetCreationTime(foundPath)).TotalHours < LastUpHours) break;
 
                         } while (FindNextFileW(searchHandle, out findFileData));
 

@@ -39,12 +39,15 @@
             tb_StandardDay = new System.Windows.Forms.TextBox();
             lbTitle_Hours = new System.Windows.Forms.Label();
             lbTitle_Days = new System.Windows.Forms.Label();
+            rd_autostart = new System.Windows.Forms.CheckBox();
+            SettingGroup = new System.Windows.Forms.GroupBox();
+            SettingGroup.SuspendLayout();
             SuspendLayout();
             // 
             // bt_Save
             // 
             bt_Save.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            bt_Save.Location = new System.Drawing.Point(335, 77);
+            bt_Save.Location = new System.Drawing.Point(325, 97);
             bt_Save.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             bt_Save.Name = "bt_Save";
             bt_Save.Size = new System.Drawing.Size(248, 62);
@@ -57,7 +60,7 @@
             // 
             lbTitle_SuperPath.AutoSize = true;
             lbTitle_SuperPath.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            lbTitle_SuperPath.Location = new System.Drawing.Point(16, 3);
+            lbTitle_SuperPath.Location = new System.Drawing.Point(6, 23);
             lbTitle_SuperPath.Name = "lbTitle_SuperPath";
             lbTitle_SuperPath.Size = new System.Drawing.Size(130, 28);
             lbTitle_SuperPath.TabIndex = 7;
@@ -65,7 +68,7 @@
             // 
             // tb_SuperPath
             // 
-            tb_SuperPath.Location = new System.Drawing.Point(153, 7);
+            tb_SuperPath.Location = new System.Drawing.Point(143, 27);
             tb_SuperPath.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             tb_SuperPath.Name = "tb_SuperPath";
             tb_SuperPath.Size = new System.Drawing.Size(430, 27);
@@ -77,7 +80,7 @@
             // 
             lbTitle_LogPath.AutoSize = true;
             lbTitle_LogPath.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            lbTitle_LogPath.Location = new System.Drawing.Point(29, 38);
+            lbTitle_LogPath.Location = new System.Drawing.Point(19, 58);
             lbTitle_LogPath.Name = "lbTitle_LogPath";
             lbTitle_LogPath.Size = new System.Drawing.Size(118, 28);
             lbTitle_LogPath.TabIndex = 10;
@@ -85,7 +88,7 @@
             // 
             // tb_LogPath
             // 
-            tb_LogPath.Location = new System.Drawing.Point(153, 42);
+            tb_LogPath.Location = new System.Drawing.Point(143, 62);
             tb_LogPath.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             tb_LogPath.Name = "tb_LogPath";
             tb_LogPath.Size = new System.Drawing.Size(430, 27);
@@ -97,7 +100,7 @@
             // 
             lbTitle_IntervalTime.AutoSize = true;
             lbTitle_IntervalTime.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            lbTitle_IntervalTime.Location = new System.Drawing.Point(35, 73);
+            lbTitle_IntervalTime.Location = new System.Drawing.Point(25, 93);
             lbTitle_IntervalTime.Name = "lbTitle_IntervalTime";
             lbTitle_IntervalTime.Size = new System.Drawing.Size(112, 28);
             lbTitle_IntervalTime.TabIndex = 12;
@@ -105,7 +108,7 @@
             // 
             // tb_IntervalTime
             // 
-            tb_IntervalTime.Location = new System.Drawing.Point(153, 77);
+            tb_IntervalTime.Location = new System.Drawing.Point(143, 97);
             tb_IntervalTime.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             tb_IntervalTime.Name = "tb_IntervalTime";
             tb_IntervalTime.Size = new System.Drawing.Size(37, 27);
@@ -117,7 +120,7 @@
             // 
             lbTitle_StandardDay.AutoSize = true;
             lbTitle_StandardDay.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            lbTitle_StandardDay.Location = new System.Drawing.Point(13, 108);
+            lbTitle_StandardDay.Location = new System.Drawing.Point(3, 128);
             lbTitle_StandardDay.Name = "lbTitle_StandardDay";
             lbTitle_StandardDay.Size = new System.Drawing.Size(133, 28);
             lbTitle_StandardDay.TabIndex = 14;
@@ -125,7 +128,7 @@
             // 
             // tb_StandardDay
             // 
-            tb_StandardDay.Location = new System.Drawing.Point(153, 112);
+            tb_StandardDay.Location = new System.Drawing.Point(143, 132);
             tb_StandardDay.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             tb_StandardDay.Name = "tb_StandardDay";
             tb_StandardDay.Size = new System.Drawing.Size(37, 27);
@@ -137,7 +140,7 @@
             // 
             lbTitle_Hours.AutoSize = true;
             lbTitle_Hours.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            lbTitle_Hours.Location = new System.Drawing.Point(190, 77);
+            lbTitle_Hours.Location = new System.Drawing.Point(180, 97);
             lbTitle_Hours.Name = "lbTitle_Hours";
             lbTitle_Hours.Size = new System.Drawing.Size(66, 28);
             lbTitle_Hours.TabIndex = 15;
@@ -147,35 +150,57 @@
             // 
             lbTitle_Days.AutoSize = true;
             lbTitle_Days.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            lbTitle_Days.Location = new System.Drawing.Point(190, 111);
+            lbTitle_Days.Location = new System.Drawing.Point(180, 131);
             lbTitle_Days.Name = "lbTitle_Days";
             lbTitle_Days.Size = new System.Drawing.Size(106, 28);
             lbTitle_Days.TabIndex = 16;
             lbTitle_Days.Text = "Days After";
             // 
+            // rd_autostart
+            // 
+            rd_autostart.AutoSize = true;
+            rd_autostart.Location = new System.Drawing.Point(478, 166);
+            rd_autostart.Name = "rd_autostart";
+            rd_autostart.Size = new System.Drawing.Size(95, 24);
+            rd_autostart.TabIndex = 17;
+            rd_autostart.Text = "AutoStart";
+            rd_autostart.UseVisualStyleBackColor = true;
+            // 
+            // SettingGroup
+            // 
+            SettingGroup.Controls.Add(lbTitle_SuperPath);
+            SettingGroup.Controls.Add(rd_autostart);
+            SettingGroup.Controls.Add(tb_SuperPath);
+            SettingGroup.Controls.Add(bt_Save);
+            SettingGroup.Controls.Add(tb_LogPath);
+            SettingGroup.Controls.Add(lbTitle_StandardDay);
+            SettingGroup.Controls.Add(lbTitle_LogPath);
+            SettingGroup.Controls.Add(tb_StandardDay);
+            SettingGroup.Controls.Add(lbTitle_Hours);
+            SettingGroup.Controls.Add(lbTitle_Days);
+            SettingGroup.Controls.Add(tb_IntervalTime);
+            SettingGroup.Controls.Add(lbTitle_IntervalTime);
+            SettingGroup.Location = new System.Drawing.Point(6, 4);
+            SettingGroup.Name = "SettingGroup";
+            SettingGroup.Size = new System.Drawing.Size(583, 195);
+            SettingGroup.TabIndex = 18;
+            SettingGroup.TabStop = false;
+            SettingGroup.Text = "Setting";
+            // 
             // SettingForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(590, 146);
+            ClientSize = new System.Drawing.Size(596, 204);
             ControlBox = false;
-            Controls.Add(bt_Save);
-            Controls.Add(lbTitle_StandardDay);
-            Controls.Add(tb_StandardDay);
-            Controls.Add(lbTitle_Days);
-            Controls.Add(lbTitle_IntervalTime);
-            Controls.Add(tb_IntervalTime);
-            Controls.Add(lbTitle_Hours);
-            Controls.Add(lbTitle_LogPath);
-            Controls.Add(tb_LogPath);
-            Controls.Add(lbTitle_SuperPath);
-            Controls.Add(tb_SuperPath);
+            Controls.Add(SettingGroup);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             Name = "SettingForm";
             Text = "LogPathSetting";
+            SettingGroup.ResumeLayout(false);
+            SettingGroup.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -191,5 +216,7 @@
         private System.Windows.Forms.TextBox tb_StandardDay;
         private System.Windows.Forms.Label lbTitle_Hours;
         private System.Windows.Forms.Label lbTitle_Days;
+        private System.Windows.Forms.CheckBox rd_autostart;
+        private System.Windows.Forms.GroupBox SettingGroup;
     }
 }

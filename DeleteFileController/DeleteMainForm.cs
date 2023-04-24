@@ -92,8 +92,8 @@ namespace DeleteFileController
             MessageBox.Show("Are you Sure?");
             Application.ExitThread();   //완전 종료
         }
-
         #endregion
+
         private void Main_Load(object? sender, EventArgs e)
         {
             PresenterList(); //Presenter
@@ -134,8 +134,6 @@ namespace DeleteFileController
         {
             rtb_log.AppendText($"[{DateTime.Now}] Get Directory info... PATH:{tb_Path.Text}");
 
-            /*if (!MakeTreeView(tb_Path.Text)) MessageBox.Show("Try again");
-            GC.Collect();   //가비지 컬렉터*/
         }
     }
 }
