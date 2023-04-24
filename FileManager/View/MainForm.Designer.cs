@@ -38,7 +38,7 @@
             tP_LOG = new System.Windows.Forms.TabPage();
             tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             bt_restart = new System.Windows.Forms.Button();
-            richTextBox1 = new System.Windows.Forms.RichTextBox();
+            rtb_LogPrint = new System.Windows.Forms.RichTextBox();
             tP_TreeView = new System.Windows.Forms.TabPage();
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             tv_superPath = new System.Windows.Forms.TreeView();
@@ -136,7 +136,7 @@
             tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 79.051384F));
             tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.948616F));
             tableLayoutPanel2.Controls.Add(bt_restart, 1, 0);
-            tableLayoutPanel2.Controls.Add(richTextBox1, 0, 0);
+            tableLayoutPanel2.Controls.Add(rtb_LogPrint, 0, 0);
             tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -156,14 +156,14 @@
             bt_restart.UseVisualStyleBackColor = true;
             bt_restart.Click += bt_restart_Click;
             // 
-            // richTextBox1
+            // rtb_LogPrint
             // 
-            richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            richTextBox1.Location = new System.Drawing.Point(3, 3);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new System.Drawing.Size(563, 291);
-            richTextBox1.TabIndex = 2;
-            richTextBox1.Text = "";
+            rtb_LogPrint.Dock = System.Windows.Forms.DockStyle.Fill;
+            rtb_LogPrint.Location = new System.Drawing.Point(3, 3);
+            rtb_LogPrint.Name = "rtb_LogPrint";
+            rtb_LogPrint.Size = new System.Drawing.Size(563, 291);
+            rtb_LogPrint.TabIndex = 2;
+            rtb_LogPrint.Text = "";
             // 
             // tP_TreeView
             // 
@@ -300,7 +300,7 @@
         private System.Windows.Forms.ListBox ltb_deletList;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Button bt_restart;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox rtb_LogPrint;
         private System.Windows.Forms.OpenFileDialog ofDialog;
         private System.IO.FileSystemWatcher fsWatcher;
         private System.Windows.Forms.NotifyIcon nfIcon;

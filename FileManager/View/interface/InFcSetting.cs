@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileManager.View
+namespace FileManager.View.@interface
 {
     interface InFcSetting
     {
+        string APPLICATION_NAME { get; }
         string SuperPath { get; set; }
         string LogPath { get; set; }
         int interval { get; set; }

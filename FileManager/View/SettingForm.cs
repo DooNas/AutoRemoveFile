@@ -1,4 +1,6 @@
-﻿using FileManager.View;
+﻿using FileManager.Model;
+using FileManager.Presenter;
+using FileManager.View.@interface;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +15,7 @@ namespace DeleteFileController
 {
     public partial class SettingForm : Form, InFcSetting
     {
+        public string APPLICATION_NAME { get { return "FileManager"; } }
         public string SuperPath
         {
             get => FileManager.Properties.Settings.Default.SuperPath;
@@ -58,6 +61,7 @@ namespace DeleteFileController
             SettingEvent();
         }
         FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
+        private PreAutoStart preAuto;
         private void SettingEvent()
         {
             Load += (sender, args) =>
@@ -71,6 +75,10 @@ namespace DeleteFileController
             tb_SuperPath.TextChanged += (sender, args) => { SuperPath = tb_SuperPath.Text; };
             tb_IntervalTime.TextChanged += (sender, args) => { interval = Convert.ToInt32(tb_IntervalTime.Text); };
             tb_StandardDay.TextChanged += (sender, args) => { StandardDay = Convert.ToInt32(tb_StandardDay.Text); };
+
+            //윈도우 부팅시
+            preAuto = new PreAutoStart(this, new MdAutoStart());
+            cbAutostart.Checked = preAuto.CheckAuto();
         }
 
         private void tb_SuperPath_Click(object sender, EventArgs e)
@@ -91,6 +99,12 @@ namespace DeleteFileController
         {
             if (MessageBox.Show("Are You Save?", "YesOrNo", MessageBoxButtons.YesNo) == DialogResult.Yes) FileManager.Properties.Settings.Default.Save();
             this.Close();
+        }
+
+        private void cbAutostart_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbAutostart.Checked) preAuto.Start();
+            else preAuto.Stop();
         }
     }
 }

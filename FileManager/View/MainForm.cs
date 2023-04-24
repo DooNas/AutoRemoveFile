@@ -1,22 +1,19 @@
 ﻿using DeleteFileController;
-using FileManager.View;
+using FileManager.View.@interface;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FileManager
 {
     public partial class MainForm : Form, InFcMain
     {
-        public List<string> DeleteDirList {  get; set; }
-        public List<TreeNode> SuperCheckNodeList { get; set; }
-
+        public RichTextBox LogBox => rtb_LogPrint;
+        public TreeView treeview => tv_superPath;
+        public List<TreeNode> SuperCheckNodeList 
+        { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<string> DeleteDirList 
+        { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public MainForm()
         {
@@ -59,7 +56,6 @@ namespace FileManager
         }
 
         #endregion
-
         private void bt_Setting_Click(object sender, EventArgs e)/* 설정창 호출 */
         {
             SettingForm Settings = new SettingForm();

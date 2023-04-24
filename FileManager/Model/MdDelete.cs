@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileManager.Presenter
+namespace FileManager.Model
 {
-    class PreLog
+    internal class MdDelete
     {
     }
 }

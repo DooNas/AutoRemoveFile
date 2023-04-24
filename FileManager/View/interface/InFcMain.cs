@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FileManager.View
+namespace FileManager.View.@interface
 {
     interface InFcMain
     {
+        TreeView treeview { get; }
+        RichTextBox LogBox { get; }
         List<string> DeleteDirList { get; set; }
-        List<TreeNode>SuperCheckNodeList { get; set; }
+        List<TreeNode> SuperCheckNodeList { get; set; }
     }
 }

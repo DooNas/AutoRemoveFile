@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingForm));
             bt_Save = new System.Windows.Forms.Button();
             lbTitle_SuperPath = new System.Windows.Forms.Label();
             tb_SuperPath = new System.Windows.Forms.TextBox();
@@ -39,7 +40,7 @@
             tb_StandardDay = new System.Windows.Forms.TextBox();
             lbTitle_Hours = new System.Windows.Forms.Label();
             lbTitle_Days = new System.Windows.Forms.Label();
-            rd_autostart = new System.Windows.Forms.CheckBox();
+            cbAutostart = new System.Windows.Forms.CheckBox();
             SettingGroup = new System.Windows.Forms.GroupBox();
             SettingGroup.SuspendLayout();
             SuspendLayout();
@@ -156,20 +157,21 @@
             lbTitle_Days.TabIndex = 16;
             lbTitle_Days.Text = "Days After";
             // 
-            // rd_autostart
+            // cbAutostart
             // 
-            rd_autostart.AutoSize = true;
-            rd_autostart.Location = new System.Drawing.Point(478, 166);
-            rd_autostart.Name = "rd_autostart";
-            rd_autostart.Size = new System.Drawing.Size(95, 24);
-            rd_autostart.TabIndex = 17;
-            rd_autostart.Text = "AutoStart";
-            rd_autostart.UseVisualStyleBackColor = true;
+            cbAutostart.AutoSize = true;
+            cbAutostart.Location = new System.Drawing.Point(478, 166);
+            cbAutostart.Name = "cbAutostart";
+            cbAutostart.Size = new System.Drawing.Size(95, 24);
+            cbAutostart.TabIndex = 17;
+            cbAutostart.Text = "AutoStart";
+            cbAutostart.UseVisualStyleBackColor = true;
+            cbAutostart.CheckedChanged += cbAutostart_CheckedChanged;
             // 
             // SettingGroup
             // 
             SettingGroup.Controls.Add(lbTitle_SuperPath);
-            SettingGroup.Controls.Add(rd_autostart);
+            SettingGroup.Controls.Add(cbAutostart);
             SettingGroup.Controls.Add(tb_SuperPath);
             SettingGroup.Controls.Add(bt_Save);
             SettingGroup.Controls.Add(tb_LogPath);
@@ -195,9 +197,10 @@
             ControlBox = false;
             Controls.Add(SettingGroup);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             Name = "SettingForm";
-            Text = "LogPathSetting";
+            Text = " ";
             SettingGroup.ResumeLayout(false);
             SettingGroup.PerformLayout();
             ResumeLayout(false);
@@ -216,7 +219,7 @@
         private System.Windows.Forms.TextBox tb_StandardDay;
         private System.Windows.Forms.Label lbTitle_Hours;
         private System.Windows.Forms.Label lbTitle_Days;
-        private System.Windows.Forms.CheckBox rd_autostart;
+        private System.Windows.Forms.CheckBox cbAutostart;
         private System.Windows.Forms.GroupBox SettingGroup;
     }
 }
