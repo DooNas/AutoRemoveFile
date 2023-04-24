@@ -1,4 +1,5 @@
 ﻿using DeleteFileController;
+using FileManager.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +12,7 @@ using System.Windows.Forms;
 
 namespace FileManager
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, InFcMain
     {
         public List<string> DeleteDirList {  get; set; }
         public List<TreeNode> SuperCheckNodeList { get; set; }

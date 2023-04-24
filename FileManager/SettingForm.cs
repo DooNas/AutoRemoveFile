@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FileManager.View;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,9 +11,9 @@ using System.Windows.Forms;
 
 namespace DeleteFileController
 {
-    public partial class SettingForm : Form
+    public partial class SettingForm : Form, InFcSetting
     {
-        private string SuperPath
+        public string SuperPath
         {
             get => FileManager.Properties.Settings.Default.SuperPath;
             set
@@ -21,7 +22,7 @@ namespace DeleteFileController
                 FileManager.Properties.Settings.Default.SuperPath = value;
             }
         }
-        private string LogPath
+        public string LogPath
         {
             get
             {
@@ -34,15 +35,21 @@ namespace DeleteFileController
                 FileManager.Properties.Settings.Default.LogPath = value;
             }
         }
-        private int interval
+        public int interval
         {
             get => FileManager.Properties.Settings.Default.Interval_Hour;
             set => FileManager.Properties.Settings.Default.Interval_Hour = value;
         }
-        private int StandardDay
+        public int StandardDay
         {
             get => FileManager.Properties.Settings.Default.Standard_Day;
             set => FileManager.Properties.Settings.Default.Standard_Day = value;
+        }
+
+        public bool AutoStart
+        {
+            get => FileManager.Properties.Settings.Default.AutoStart;
+            set => FileManager.Properties.Settings.Default.AutoStart = value;
         }
 
         public SettingForm()
