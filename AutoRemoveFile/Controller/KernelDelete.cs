@@ -48,7 +48,8 @@ namespace AutoRemoveFile.Controller
         #endregion
 
         int savecount = 0;
-        public Boolean IsEmptyFolder(String folder)/* 폴더 안에 파일유무 체크 */
+        public Boolean IsEmptyFolder(String folder)
+        /* 폴더 안에 파일유무 체크 */
         {
             Boolean res = true;
 
@@ -88,7 +89,8 @@ namespace AutoRemoveFile.Controller
             FindClose(searchHandle);
             return res;
         }   
-        public Boolean DeleteFolder(String folder, int LastUpHours)/* 절대경로를 기준으로 LastUpdate값을 넘긴 파일,폴더를 제거 */
+        public Boolean DeleteFolder(String folder, int LastUpHours)
+        /* 절대경로를 기준으로 LastUpdate값을 넘긴 파일,폴더를 제거 */
         {
             Boolean res = true;
             //  keep non-empty folders to delete later (after we delete everything inside)
@@ -178,6 +180,6 @@ namespace AutoRemoveFile.Controller
             } while (currentFolder != null && res);
 
             return res;
-        }   //  public static Boolean DeleteFolder(String folder)
+        }
     }
 }

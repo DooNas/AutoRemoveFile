@@ -12,24 +12,26 @@ namespace FileManager.Model
 {
     internal class MdLog : InFcLog
     {
-        public string LogDirPath 
-        { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string LogFilePath 
-        { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string LogDirPath
+        {
+            get
+            {
+                if (Properties.Settings.Default.LogPath == null) return Environment.CurrentDirectory + @"\Log";
+                return Properties.Settings.Default.LogPath;
+            }
+            set => Properties.Settings.Default.LogPath = value;
+        }
+        public static string LogFilePath { get; set; }
+
         public RichTextBox LogBox => throw new NotImplementedException();
 
         public string LogWrite(string message, int index)
         {
-            //경로지정이 안되어 있을 경우
-            if (Properties.Settings.Default.LogPath == string.Empty) LogDirPath = Environment.CurrentDirectory + @"\Log";
-            else LogDirPath = Properties.Settings.Default.LogPath + @"\Log";
-
-            LogFilePath = LogDirPath + "\\Log_" + DateTime.Today.ToString("MMdd") + ".log"; //해당 경로의 파일명
+            LogFilePath = $"{LogDirPath}\\Log_{DateTime.Today.ToString("MMdd")}.log"; //해당 경로의 파일명
 
             DirectoryInfo di = new DirectoryInfo(LogDirPath);
             FileInfo fi = new FileInfo(LogFilePath);
             string temp;
-
             try
             {
                 temp = StrMessage(message, index);

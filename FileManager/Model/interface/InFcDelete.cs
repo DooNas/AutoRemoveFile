@@ -8,5 +8,8 @@ namespace FileManager.Model.@interface
 {
     interface InFcDelete
     {
+        int interval { get; set; }
+        int LastUpHours { get; set; }
+        List<string> DeleteDirList { get; }
     }
 }

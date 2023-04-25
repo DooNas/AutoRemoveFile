@@ -10,8 +10,7 @@ namespace FileManager.Model.@interface
 {
     interface InFcLog
     {
-        string LogDirPath { get; set; }    
-        string LogFilePath { get; set; }
+        string LogDirPath { get; set; }
         RichTextBox LogBox { get; }
 
         public void LogRead();
