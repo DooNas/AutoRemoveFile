@@ -5,9 +5,7 @@ VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRemoveFile", "AutoRemoveFile\AutoRemoveFile.csproj", "{6955FCF0-DEF8-4D11-BEF1-0087A5F722D6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeleteFileController", "DeleteFileController\DeleteFileController.csproj", "{6753590D-6A0D-421A-9A83-05BB9897E47C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileManager", "FileManager\FileManager.csproj", "{783B7DDF-8CAB-4CB5-AA25-C9ED91B3A124}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileManager", "FileManager\FileManager.csproj", "{783B7DDF-8CAB-4CB5-AA25-C9ED91B3A124}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +17,6 @@ Global
 		{6955FCF0-DEF8-4D11-BEF1-0087A5F722D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6955FCF0-DEF8-4D11-BEF1-0087A5F722D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6955FCF0-DEF8-4D11-BEF1-0087A5F722D6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6753590D-6A0D-421A-9A83-05BB9897E47C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6753590D-6A0D-421A-9A83-05BB9897E47C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6753590D-6A0D-421A-9A83-05BB9897E47C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6753590D-6A0D-421A-9A83-05BB9897E47C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{783B7DDF-8CAB-4CB5-AA25-C9ED91B3A124}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{783B7DDF-8CAB-4CB5-AA25-C9ED91B3A124}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{783B7DDF-8CAB-4CB5-AA25-C9ED91B3A124}.Release|Any CPU.ActiveCfg = Release|Any CPU
