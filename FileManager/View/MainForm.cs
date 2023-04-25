@@ -1,7 +1,8 @@
 ﻿using DeleteFileController;
+using FileManager.Model;
+using FileManager.Presenter;
 using FileManager.View.@interface;
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace FileManager
@@ -9,18 +10,15 @@ namespace FileManager
     public partial class MainForm : Form, InFcMain
     {
         public RichTextBox LogBox => rtb_LogPrint;
+        public ListBox DeleteListBox => ltb_deletList;
         public TreeView treeview => tv_superPath;
-        public List<TreeNode> SuperCheckNodeList 
-        { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public List<string> DeleteDirList 
-        { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public MainForm()
         {
             InitializeComponent();
             TrayIconAction();
+            Presenters();
         }
-
         #region 트레이 아이콘
         private void TrayIconAction() //Events
         {
@@ -54,21 +52,40 @@ namespace FileManager
             MessageBox.Show("Are you Sure?");
             Application.ExitThread();   //완전 종료
         }
-
         #endregion
-        private void bt_Setting_Click(object sender, EventArgs e)/* 설정창 호출 */
+        #region 설정창
+        private void bt_Setting_Click(object sender, EventArgs e)
+        /* 설정창 호출 */
         {
             SettingForm Settings = new SettingForm();
+            Settings.FormClosing += Settings_FormClosing;
             Settings.ShowDialog();
         }
+        private void Settings_FormClosing(object? sender, FormClosingEventArgs e)
+        {
+            CheckingTvLt.SuperPathToTreeView();
+        }
+        #endregion
 
-        private void bt_restart_Click(object sender, EventArgs e)/* 수동 재시작 */
+        PreCheckList CheckingTvLt;
+        PreDelete DeletingTarget;
+        public void Presenters()
+        {
+            /* 삭제경로 지정 */
+            CheckingTvLt = new PreCheckList(this, new MdCheckList());
+            CheckingTvLt.SuperPathToTreeView();
+        }
+
+        private void bt_restart_Click(object sender, EventArgs e)
+        /* 수동 재시작 */
         {
 
         }
-        private void bt_SavedeleteList_Click(object sender, EventArgs e)/* [삭제목록 저장] TreeView to ListBox */
-        {
+        private void bt_SavedeleteList_Click(object sender, EventArgs e)
+        /* [삭제목록 저장] TreeView to ListBox */
+        { CheckingTvLt.TreViewtoDeleteList(); }
 
-        }
+        private void tv_superPath_AfterCheck(object sender, TreeViewEventArgs e)
+        { CheckingTvLt.ControllerChildrenNode(e); }
     }
 }

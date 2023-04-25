@@ -10,8 +10,7 @@ namespace FileManager.View.@interface
     interface InFcMain
     {
         TreeView treeview { get; }
+        ListBox DeleteListBox { get; }
         RichTextBox LogBox { get; }
-        List<string> DeleteDirList { get; set; }
-        List<TreeNode> SuperCheckNodeList { get; set; }
     }
 }

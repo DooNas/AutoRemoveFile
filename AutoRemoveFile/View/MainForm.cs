@@ -98,8 +98,8 @@ namespace AutoRemoveFile
             var children = node.Nodes;
             for (int K = 0; K < children.Count; K++) { children[K].Checked = node.Checked; }
         }
-        
-        ////For Make TreeView////
+        #endregion
+        #region For Make TreeView
         private bool MakeTreeView(string path)
         {
             if (path == string.Empty) return false;
@@ -131,8 +131,6 @@ namespace AutoRemoveFile
             }
             return directoryNode;
         }
-        ////////////////////////
-
         #endregion
 
         #region TreeView에서 선택한 경로를 Delete List로 연결
