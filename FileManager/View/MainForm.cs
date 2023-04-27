@@ -17,7 +17,7 @@ namespace FileManager
         {
             InitializeComponent();
             TrayIconAction();
-            Presenters();
+            Shown += (sender, args) => Presenters();
         }
         #region 트레이 아이콘
         private void TrayIconAction() //Events
@@ -69,10 +69,11 @@ namespace FileManager
 
         PreCheckList CheckingTvLt;
         PreDelete DeletingTarget;
+
         public void Presenters()
         {
             /* 삭제경로 지정 */
-            CheckingTvLt = new PreCheckList(this, new MdCheckList());
+            CheckingTvLt = new PreCheckList(this, new MdCheckList(), new MdLog());
             CheckingTvLt.SuperPathToTreeView();
         }
 
@@ -87,5 +88,7 @@ namespace FileManager
 
         private void tv_superPath_AfterCheck(object sender, TreeViewEventArgs e)
         { CheckingTvLt.ControllerChildrenNode(e); }
+
+
     }
 }

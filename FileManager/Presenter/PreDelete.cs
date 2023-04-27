@@ -92,7 +92,7 @@ namespace FileManager.Presenter
                                 {
                                     if (IsEmptyFolder(foundPath))
                                     {   //  found an empty folder, delete it
-                                        log.LogWrite(foundPath, 4);
+                                        log.LogPrint(foundPath, 4);
                                         if (!(res = RemoveDirectoryW(foundPath)))
                                         {
                                             Int32 error = Marshal.GetLastWin32Error();
@@ -111,7 +111,7 @@ namespace FileManager.Presenter
                                 DateTime createdDate = File.GetCreationTime(foundPath);
                                 if (DateTime.Now.Subtract(createdDate).TotalHours >= LastUpHours)/* daysOld의 값보다 더 지난 날짜일 경우 */
                                 {
-                                    log.LogWrite(foundPath, 4);
+                                    log.LogPrint(foundPath, 4);
                                     if (!(res = DeleteFileW(foundPath)))/* 삭제 진행 */
                                     {   //삭제 실패 여부 체크
                                         int error = Marshal.GetLastWin32Error(); break;

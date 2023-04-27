@@ -11,11 +11,9 @@ namespace FileManager.Model.@interface
     interface InFcLog
     {
         string LogDirPath { get; set; }
-        RichTextBox LogBox { get; }
+        RichTextBox LogBox { get; set; }
 
-        public void LogRead();
-        public string LogWrite(string message, int index);
-        public string StrMessage(string Message, int index);
-        public string FileWriter(DirectoryInfo di, FileInfo fi, string temp);
+        public void LogPrint(string message, int index);
+        public string StrLogMessage(string message, int index);
     }
 }
