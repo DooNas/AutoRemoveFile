@@ -33,6 +33,7 @@ namespace FileManager.Model
             LogBox.AppendText($"[{DateTime.Now}]"+StrLogMessage(message, index) + "\n");
 
             Log.CloseAndFlush();
+            DeleteOldLogs();//LogBox 메모리 제한
         }
         public string StrLogMessage(string message, int index) // 출력문
         {
@@ -48,6 +49,23 @@ namespace FileManager.Model
                 "Get Delete Directory List OK!"                                                 //[7] 삭제 리스트 접근 성공
             };
             return string.Format(ChoiceList[index], message);
+        }
+        private void DeleteOldLogs()
+        {
+            int maxLogLength = 5000;
+            if (LogBox.InvokeRequired)
+            {
+                LogBox.Invoke(new Action(() => DeleteOldLogs()));
+            }
+            else
+            {
+                if (LogBox.TextLength > maxLogLength)
+                {
+                    int excessChars = LogBox.TextLength - maxLogLength;
+                    LogBox.Select(0, excessChars);
+                    LogBox.SelectedText = "";
+                }
+            }
         }
     }
 }

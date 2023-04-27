@@ -176,7 +176,7 @@ namespace FileManager.Presenter
                         break;
                     }
 
-                }   //  if ((findFileData.dwFileAttributes & FileAttributes.Directory) == FileAttributes.Directory)
+                }
                 else
                 {
                     //  found a file

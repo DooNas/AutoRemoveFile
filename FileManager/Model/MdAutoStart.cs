@@ -37,5 +37,6 @@ namespace FileManager.Model
             if (GetKey.GetValue(APPLICATION_NAME) == null) return false;
             else return true;
         }
+
     }
 }

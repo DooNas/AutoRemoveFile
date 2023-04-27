@@ -3,6 +3,7 @@ using FileManager.Model;
 using FileManager.Presenter;
 using FileManager.View.@interface;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FileManager
@@ -75,6 +76,7 @@ namespace FileManager
             /* 삭제경로 지정 */
             CheckingTvLt = new PreCheckList(this, new MdCheckList(), new MdLog());
             CheckingTvLt.SuperPathToTreeView();
+
         }
 
         private void bt_restart_Click(object sender, EventArgs e)
@@ -88,7 +90,5 @@ namespace FileManager
 
         private void tv_superPath_AfterCheck(object sender, TreeViewEventArgs e)
         { CheckingTvLt.ControllerChildrenNode(e); }
-
-
     }
 }

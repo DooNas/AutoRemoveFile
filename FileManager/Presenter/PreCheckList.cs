@@ -33,6 +33,7 @@ namespace FileManager.Presenter
         public void TreViewtoDeleteList() /* TreeView를 기준으로 DeleteListBox 생성 */
         {
             model.ListRefresh();
+            if (model.DeleteDirList.Count > 0) { log.LogPrint(string.Empty, 7); }
             GC.Collect();   //가비지 컬렉터
         }
         public void ControllerChildrenNode(TreeViewEventArgs e)
