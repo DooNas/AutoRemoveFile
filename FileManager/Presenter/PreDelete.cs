@@ -3,10 +3,7 @@ using FileManager.View.@interface;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FileManager.Presenter
 {
@@ -60,12 +57,12 @@ namespace FileManager.Presenter
         }
 
         public Boolean DeleteFolder(String SuperDeletePath, int LastUpHours)
-        /* 절대경로를 기준으로 LastUpdate값을 넘긴 파일,폴더를 제거 */
+        /* DeleteList의 경로를 기준으로 LastUpdate값을 넘긴 파일,폴더를 제거 */
         {
             int savecount = 0;
 
             Boolean res = true;
-            //  keep non-empty folders to delete later (after we delete everything inside)
+            //  
             Stack<String> nonEmptyFolder = new Stack<String>();
             String currentFolder = SuperDeletePath;
             do
@@ -83,46 +80,41 @@ namespace FileManager.Presenter
                     if (searchHandle != INVALID_HANDLE_VALUE)
                     {
                         do
-                        {   //nonEmptyFolder의 경로를 기반으로 각 폴더의 서브폴더와 파일을 찾는다.
+                        {   
                             String foundPath = currentFolder + @"\" + findFileData.cFileName;
                             if ((findFileData.dwFileAttributes & FileAttributes.Directory) == FileAttributes.Directory)
+                            /* 하위 디렉토리가 있을 경우 */
                             {
-                                //  found a sub folder
                                 if (findFileData.cFileName != "." && findFileData.cFileName != "..")
                                 {
                                     if (IsEmptyFolder(foundPath))
-                                    {   //  found an empty folder, delete it
+                                    /* 빈 폴더일 경우 삭제처리 */
+                                    {
                                         log.LogPrint(foundPath, 4);
-                                        if (!(res = RemoveDirectoryW(foundPath)))
-                                        {
-                                            Int32 error = Marshal.GetLastWin32Error();
-                                            break;
-                                        }
+                                        if (!(res = RemoveDirectoryW(foundPath))) { Int32 error = Marshal.GetLastWin32Error(); break; }
                                     }
-                                    else
-                                    {   //  found a non-empty folder
-                                        nonEmptyFolder.Push(foundPath);
-                                    }
-                                }   //  if (findFileData.cFileName != "." && findFileData.cFileName != "..")
-
-                            }   //  if ((findFileData.dwFileAttributes & FileAttributes.Directory) == FileAttributes.Directory)
+                                    /* 빈 폴더가 아닐 경우 nonEmptyFolder(stack)배열에 해당 폴더 추가 */
+                                    else { nonEmptyFolder.Push(foundPath); }
+                                }
+                            }
                             else
-                            {// 서브폴더 없음
+                            /* 하위 디렉토리가 없을 경우 */
+                            {
                                 DateTime createdDate = File.GetCreationTime(foundPath);
-                                if (DateTime.Now.Subtract(createdDate).TotalHours >= LastUpHours)/* daysOld의 값보다 더 지난 날짜일 경우 */
+                                if (DateTime.Now.Subtract(createdDate).TotalHours >= LastUpHours)
+                                /* 보존기간보다 길게 보관된 경우 */
                                 {
                                     log.LogPrint(foundPath, 4);
-                                    if (!(res = DeleteFileW(foundPath)))/* 삭제 진행 */
-                                    {   //삭제 실패 여부 체크
-                                        int error = Marshal.GetLastWin32Error(); break;
-                                    }
+                                    if (!(res = DeleteFileW(foundPath))) { Int32 error = Marshal.GetLastWin32Error(); break; }
                                 }
+                                /* 보존기간보다 적게 보관된 경우 */
                                 else savecount++;
+
                             }
 
-                            if (nonEmptyFolder.Count != savecount) currentFolder = nonEmptyFolder.Pop();
-                            else currentFolder = null;
-
+                            /* nonEmptyFolder에 보존기간을 충족하는 folder 제거 */
+                            if(Directory.GetFiles(foundPath).Length == savecount) 
+                            
                             // Check if the condition is still met
                             if (currentFolder == null || DateTime.Now.Subtract(File.GetCreationTime(foundPath)).TotalHours < LastUpHours) break;
 
@@ -134,14 +126,8 @@ namespace FileManager.Presenter
 
                 }
 
-                if (nonEmptyFolder.Count > 0)
-                {
-                    currentFolder = nonEmptyFolder.Pop();
-                }
-                else
-                {
-                    currentFolder = null;
-                }
+                if (nonEmptyFolder.Count > 0) currentFolder = nonEmptyFolder.Pop();
+                else currentFolder = null;
             } while (currentFolder != null && res);
 
             return res;
